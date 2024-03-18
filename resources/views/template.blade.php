@@ -53,24 +53,52 @@
 </head>
 
 <body class="bg p-5">
-    <div class="dropdown">
-        <i class="fa-solid fa-bars btn btn-menu fs__title" data-bs-toggle="dropdown" aria-expanded="false"></i>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li class="dropdown-item fs__child">Hai Prodi Kedokteran</li>
-            <li><a class="dropdown-item fs__child {{ Request::is('/*') ? 'active' : '' }}" href="{{ url('/') }}"><i
-                        class="fa-solid fa-sheet-plastic"></i>
-                    Tulis
-                    Laporan</a></li>
-            <li><a class="dropdown-item fs__child {{ Request::is('riwayatLaporan*') ? 'active' : '' }}"
-                    href="{{ url('riwayatLaporan') }}"><i class="fa fa-history" aria-hidden="true"></i>
-                    Riwayat
-                    Laporan</a></li>
-            <li><a class="dropdown-item fs__child" href="{{ url('logout') }}"><i class="fa fa-sign-out"
-                        aria-hidden="true"></i>
-                    Logout</a>
-            </li>
-        </ul>
-    </div>
+    @if (isset($errors) && count($errors) > 0)
+        <div class="alert alert-warning" role="alert">
+            <ul class="list-unstyled mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @if (Session::get('success', false))
+        <?php $data = Session::get('success'); ?>
+        @if (is_array($data))
+            @foreach ($data as $msg)
+                <div class="alert alert-warning" role="alert">
+                    <i class="fa fa-check"></i>
+                    {{ $msg }}
+                </div>
+            @endforeach
+        @else
+            <div class="alert alert-warning" role="alert">
+                <i class="fa fa-check"></i>
+                {{ $data }}
+            </div>
+        @endif
+    @endif
+    @if (Auth::check())
+        <div class="dropdown">
+            <i class="fa-solid fa-bars btn btn-menu fs__title" data-bs-toggle="dropdown" aria-expanded="false"></i>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li class="dropdown-item fs__child">Hai Prodi Kedokteran</li>
+                <li><a class="dropdown-item fs__child {{ Request::is('/*') ? 'active' : '' }}"
+                        href="{{ url('/') }}"><i class="fa-solid fa-sheet-plastic"></i>
+                        Tulis
+                        Laporan</a></li>
+                <li><a class="dropdown-item fs__child {{ Request::is('riwayatLaporan*') ? 'active' : '' }}"
+                        href="{{ url('riwayatLaporan') }}"><i class="fa fa-history" aria-hidden="true"></i>
+                        Riwayat
+                        Laporan</a></li>
+                <li><a class="dropdown-item fs__child" href="{{ url('logout') }}"><i class="fa fa-sign-out"
+                            aria-hidden="true"></i>
+                        Logout</a>
+                </li>
+            </ul>
+        </div>
+    @endif
     @yield('body')
 </body>
 <script></script>
