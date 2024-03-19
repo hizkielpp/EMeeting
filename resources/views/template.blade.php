@@ -10,16 +10,8 @@
     <script src="{{ asset('jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.js') }}"></script>
     <style>
         .bg {
-            /* The image used */
-            background-image: url("img/bg_primary.webp");
-
-            /* Full height */
-            height: 100%;
-
-            /* Center and scale the image nicely */
-            background-position: center;
-            background-repeat: repeat;
-            background-size: cover;
+            /* Background Color */
+            background-color: #fdfdfd;
         }
 
         .fs__title {
@@ -52,7 +44,7 @@
     @yield('head')
 </head>
 
-<body class="bg p-5">
+<body class="bg p-5 @yield('class-body') ">
     @if (isset($errors) && count($errors) > 0)
         <div class="alert alert-warning" role="alert">
             <ul class="list-unstyled mb-0">

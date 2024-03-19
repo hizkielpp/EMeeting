@@ -45,6 +45,5 @@ Route::group(['middleware' => ['auth']], function () {
         return view('riwayatLaporan');
     });
     Route::POST('/input_laporan', [LaporanController::class, 'input_laporan'])->name('input_laporan');
-
     Route::get('/hapus_file/{filename}', [LaporanController::class, 'hapus_file'])->name('hapus_file');
 });

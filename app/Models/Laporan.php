@@ -15,12 +15,15 @@ class Laporan extends Model
      */
     protected $fillable = [
         'tanggal_rapat',
-        'perihal_mahasiswa',
-        'perihal_dosen',
-        'perihal_tendik',
-        'perihal_sarpras',
+        'mahasiswa',
+        'dosen',
+        'tendik',
+        'sarpras',
         'lain-lain',
-        'bukti_presensi',
+        'bukti_presensi_kehadiran',
+        'file_pendukung_rapat',
+        'tanda_tangan_kadep',
+        'tanda_tangan_kaprodi'
     ];
     public function post()
     {

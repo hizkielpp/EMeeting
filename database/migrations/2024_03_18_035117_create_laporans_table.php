@@ -23,6 +23,10 @@ return new class extends Migration
             $table->text('tendik');
             $table->text('sarpras');
             $table->text('lain-lain');
+            $table->string('bukti_presensi_kehadiran');
+            $table->string('file_pendukung_rapat')->nullable();
+            $table->string('tanda_tangan_kadep');
+            $table->string('tanda_tangan_kaprodi');
             $table->timestamps();
         });
     }

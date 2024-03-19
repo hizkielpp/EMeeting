@@ -29,7 +29,8 @@ class InputLaporanRequest extends FormRequest
             'dosen' => 'required',
             'tendik' => 'required',
             'sarpras' => 'required',
-            'bukti_presensi' => 'required',
+            'bukti_presensi_kehadiran' => 'required',
+            'tanda_tangan_kadep' => 'required',
             'tanda_tangan_kaprodi' => 'required'
         ];
     }
