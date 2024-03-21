@@ -1,55 +1,11 @@
 @extends('template')
 @section('head')
-    <style>
-        .bg {
-            /* The image used */
-            background-image: url("img/bg_primary.webp");
-
-            /* Full height */
-            height: 100%;
-
-            /* Center and scale the image nicely */
-            background-position: center;
-            background-repeat: repeat;
-            background-size: cover;
-        }
-
-        .fs__title {
-            font-size: 40px;
-        }
-
-        .fs__child {
-            font-size: 20px;
-        }
-
-        .fs__normal {
-            font-size: 16px;
-        }
-
-        .btn-green {
-            background-color: #006b1a;
-            color: white;
-            max-width: 200px;
-        }
-
-        .btn-logout {
-            background-color: rgb(95, 95, 95);
-            color: white;
-            max-width: 200px;
-            position: fixed;
-            right: 0.375rem;
-            top: 0.75rem;
-        }
-
-        .welcoming {
-            left: 0.375rem;
-            top: 0.75rem;
-        }
-    </style>
 @endsection
+@section('class-body', 'd-flex justify-content-center align-items-center')
+
 @section('body')
-    <form class="row needs-validation m-0 p-3 mx-5 rounded bg-white bg-opacity-75 " style="border-top: #006b1a 2px" novalidate
-        action="{{ route('register') }}" method="post">
+    <form class="row shadow needs-validation m-0 p-3 mx-5 rounded bg-white bg-opacity-75" style="border-top: #006b1a 2px"
+        novalidate action="{{ route('register') }}" method="post">
         @csrf
         <div class="col-12 text-center fs__title mb-3">Formulir Register</div>
         <div class="col-12 mb-3 fs__child">

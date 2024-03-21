@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
+    public function index()
+    {
+        if (Auth::user()->role == 'pimpinan') {
+            $users = User::where('role', '!=', 'pimpinan')->get();
+            return User::with('laporans')->get();
+            return view('index_pimpinan');
+        } else {
+            return view('index');
+        }
+    }
     public function index_register()
     {
         return view('register');
@@ -30,7 +40,7 @@ class AuthController extends Controller
     {
         $credentials = $request->getCredentials();
         if (!Auth::validate($credentials)) :
-            return redirect()->to('login')->withErrors(['failed' => 'Username atau password tidak sesuai']);
+            return redirect()->to('login')->with(['error' => 'Username atau password tidak sesuai']);
         endif;
         $user = Auth::getProvider()->retrieveByCredentials($credentials);
         Auth::login($user);

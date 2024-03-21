@@ -33,17 +33,13 @@ Route::group(['middleware' => ['guest']], function () {
 
 Route::group(['middleware' => ['auth']], function () {
     /** Index (Formulir Laporan) Route */
-    Route::get('/', function () {
-        return view('index');
-    });
+    Route::get('/', [AuthController::class, 'index'])->name('index');
     /**
      * Logout Routes
      */
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout.perform');
     /** Laporan Route */
-    Route::get('/riwayatLaporan', function () {
-        return view('riwayatLaporan');
-    });
+    Route::get('/riwayat_laporan', [LaporanController::class, 'riwayat_laporan'])->name('riwayat_laporan');
     Route::POST('/input_laporan', [LaporanController::class, 'input_laporan'])->name('input_laporan');
     Route::get('/hapus_file/{filename}', [LaporanController::class, 'hapus_file'])->name('hapus_file');
 });

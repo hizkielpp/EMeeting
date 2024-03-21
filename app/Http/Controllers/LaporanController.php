@@ -22,26 +22,12 @@ class LaporanController extends Controller
             $request->bukti_presensi_kehadiran->move('bukti', $filename_presensi_kehadiran);
             $data['bukti_presensi_kehadiran'] = $filename_presensi_kehadiran;
         }
-        if (isset($data['tanda_tangan_kadep'])) {
-            $filename_tanda_tangan_kadep = auth()->id() . '_' . rand(10000, 99999) . '_' . auth()->id() . '.' . $request->tanda_tangan_kadep->extension();
-            $type = $request->tanda_tangan_kadep->getClientMimeType();
-            $size = $request->tanda_tangan_kadep->getSize();
-            $request->tanda_tangan_kadep->move('bukti', $filename_tanda_tangan_kadep);
-            $data['tanda_tangan_kadep'] = $filename_tanda_tangan_kadep;
-        }
         if (isset($data['file_pendukung_rapat'])) {
             $filename_file_pendukung_rapat = auth()->id() . '_' . rand(10000, 99999) . '_' . auth()->id() . '.' . $request->file_pendukung_rapat->extension();
             $type = $request->file_pendukung_rapat->getClientMimeType();
             $size = $request->file_pendukung_rapat->getSize();
             $request->file_pendukung_rapat->move('bukti', $filename_file_pendukung_rapat);
             $data['file_pendukung_rapat'] = $filename_file_pendukung_rapat;
-        }
-        if (isset($data['tanda_tangan_kaprodi'])) {
-            $filename_tanda_tangan_kaprodi = auth()->id() . '_' . rand(10000, 99999) . '_' . auth()->id() . '.' . $request->tanda_tangan_kaprodi->extension();
-            $type = $request->tanda_tangan_kaprodi->getClientMimeType();
-            $size = $request->tanda_tangan_kaprodi->getSize();
-            $request->tanda_tangan_kaprodi->move('bukti', $filename_tanda_tangan_kaprodi);
-            $data['tanda_tangan_kaprodi'] = $filename_tanda_tangan_kaprodi;
         }
         $data['tanggal_rapat'] = date_format(date_create($data['tanggal_rapat']), 'Y-m-d H:i:s');
         $laporan = new Laporan($data);
@@ -81,5 +67,10 @@ class LaporanController extends Controller
         } else {
             dd('File not found');
         }
+    }
+    public function riwayat_laporan()
+    {
+        $laporans = Laporan::where('fk_user', Auth::id())->get();
+        return view('riwayat_laporan')->with(['laporans' => $laporans]);
     }
 }

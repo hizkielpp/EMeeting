@@ -19,7 +19,7 @@ class Laporan extends Model
         'dosen',
         'tendik',
         'sarpras',
-        'lain-lain',
+        'lain_lain',
         'bukti_presensi_kehadiran',
         'file_pendukung_rapat',
         'tanda_tangan_kadep',
