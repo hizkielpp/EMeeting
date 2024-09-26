@@ -351,6 +351,12 @@
                 inputDiv.classList.add('mb-3', 'input-group');
                 inputDiv.id = `input-group-${this.inputCount}`;
 
+
+                // Numbering 
+                const numbering = document.createElement('button');
+                numbering.classList.add('btn', 'btn-primary');
+                numbering.innerText = `${this.inputCount}.`;
+
                 // Create the input element
                 const input = document.createElement('input');
                 input.type = 'text';
@@ -364,6 +370,7 @@
                 removeButton.addEventListener('click', () => this.removeInput(inputDiv.id));
 
                 // Append input and remove button to the div
+                inputDiv.appendChild(numbering);
                 inputDiv.appendChild(input);
                 inputDiv.appendChild(removeButton);
 
@@ -376,6 +383,8 @@
                 if (inputDiv) {
                     this.container.removeChild(inputDiv);
                 }
+                // Increment input count
+                this.inputCount--;
             }
         }
         // Initialize the manager
