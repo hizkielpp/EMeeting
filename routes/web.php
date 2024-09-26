@@ -43,3 +43,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::POST('/input_laporan', [LaporanController::class, 'input_laporan'])->name('input_laporan');
     Route::get('/hapus_file/{filename}', [LaporanController::class, 'hapus_file'])->name('hapus_file');
 });
+Route::get('lihat_notula', function () {
+    return view('notula');
+});
+Route::get('print_notula', [LaporanController::class, 'print_laporan']);

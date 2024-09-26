@@ -248,30 +248,7 @@
 
             ctx.lineWidth = 3;
             ctx.lineJoin = ctx.lineCap = 'round';
-            // submit.addEventListener('click', (event) => {
-            //     event.preventDefault();
-            //     const imageURL = canvas.toDataURL();
-            //     const image = document.createElement('img');
-            //     image.src = imageURL;
-            //     image.height = canvas.height;
-            //     image.width = canvas.width;
-            //     image.style.display = 'block';
-            //     form.appendChild(image);
-            //     console.log(console.log(canvas.toDataURL()))
-            //     clearPad();
-            // })
-            // form.addEventListener('submit', (event) => {
-            //     event.preventDefault();
-            //     const imageURL = canvas.toDataURL();
-            //     const image = document.createElement('img');
-            //     image.src = imageURL;
-            //     image.height = canvas.height;
-            //     image.width = canvas.width;
-            //     image.style.display = 'block';
-            //     form.appendChild(image);
-            //     console.log(console.log(canvas.toDataURL()))
-            //     clearPad();
-            // })
+
             const clearPad = () => {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
             }

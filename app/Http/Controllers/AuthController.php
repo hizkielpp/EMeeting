@@ -15,9 +15,7 @@ class AuthController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'pimpinan') {
-            $users = User::where('role', '!=', 'pimpinan')->get();
-            return User::with('laporans')->get();
-            return view('index_pimpinan');
+            return view('remake.create_laporan');
         } else {
             return view('index');
         }
@@ -34,7 +32,7 @@ class AuthController extends Controller
     }
     public function index_login()
     {
-        return view('login');
+        return view('remake.authentication-login');
     }
     public function login(LoginRequest $request)
     {
