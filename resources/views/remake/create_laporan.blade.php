@@ -253,10 +253,17 @@
                                         <div id="pr" class="mb-3"></div>
                                         <div id="add-pr-button" class="btn btn-primary">Tambah Peserta Rapat</div>
                                     </div>
-                                    <div class="row">
-                                        <div class="mb-3 col-lg-6 col-sm-12 signature-pad-form fs__child"
+                                    <div class="form-check mb-2">
+                                        <input type="checkbox"
+                                            onclick="this.checked ? $('#container-KSM').removeClass('d-none') : $('#container-KSM').addClass('d-none')"
+                                            class="form-check-input" id="exampleCheck1">
+                                        <label class="form-check-label" for="exampleCheck1">Bersama dengan
+                                            KSM</label>
+                                    </div>
+                                    <div class="row gap-2 mb-2 ml-5">
+                                        <div class="col-lg-5 col-sm-12 signature-pad-form fs__child m-0 p-0"
                                             id="form_tanda_tangan_kadep">
-                                            <label for="nama_jabatan_pejabat" class="fs__child  w-100">Jabatan
+                                            <label for="nama_jabatan_pejabat" class="fs__child  w-100">Jabatan pejabat
                                                 <span class="text-danger">*</span></label>
                                             <input type="text" id="nama_jabatan_pejabat"
                                                 name="nama_jabatan_pejabat" class="form-control">
@@ -282,16 +289,13 @@
                                                 class="form-control">
                                             {{-- <button class="submit-button" id="submit_tanda_tangan_kadep">SUBMIT</button> --}}
                                         </div>
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox"
-                                                onclick="if(this.checked)? $('#container-KSM').addClass('d-none') : $('#container-KSM').removeClass('d-none')"
-                                                class="form-check-input" id="exampleCheck1">
-                                            <label class="form-check-label" for="exampleCheck1">Bersama dengan
-                                                KSM</label>
-                                        </div>
                                         <div id="container-KSM"
-                                            class="col-lg-6 col-sm-12 signature-pad-form fs__child d-none"
+                                            class="col-lg-5 col-sm-12 signature-pad-form fs__child d-none m-0 p-0"
                                             id="form_tanda_tangan_ksm">
+                                            <label for="nama_jabatan_KSM" class="fs__child  w-100">Jabatan Ketua KSM
+                                                <span class="text-danger">*</span></label>
+                                            <input type="text" readonly value="Ketua KSM" id="nama_jabatan_KSM"
+                                                name="nama_jabatan_KSM" class="form-control">
                                             <label for="tanda_tangan_ksm" class="fs__child  w-100">Tanda tangan
                                                 KSM</label>
                                             <input type="text" class="d-none" name="tanda_tangan_ksm"
@@ -303,10 +307,17 @@
                                             <div class="invalid-feedback">
                                                 Tanda tangan kepala departemen harus diisi.
                                             </div>
-                                            {{-- <button class="submit-button" id="submit_tanda_tangan_kadep">SUBMIT</button> --}}
+                                            <label for="nama_KSM" class="fs__child  w-100">Nama Ketua KSM
+                                            </label>
+                                            <input type="text" id="nama_KSM" name="nama_KSM"
+                                                class="form-control">
+                                            <label for="NIP_KSM" class="fs__child  w-100">NIP Ketua KSM
+                                            </label>
+                                            <input type="text" id="NIP_KSM" name="NIP_KSM"
+                                                class="form-control">
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="mt-3 btn btn-primary">Submit</button>
                                 </form>
                             </div>
                         </div>
