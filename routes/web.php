@@ -47,3 +47,6 @@ Route::get('lihat_notula', function () {
     return view('notula');
 });
 Route::get('print_notula', [LaporanController::class, 'print_laporan']);
+Route::get('old_index',function(){
+    return view('index');
+});

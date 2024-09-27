@@ -24,14 +24,17 @@ class InputLaporanRequest extends FormRequest
     public function rules()
     {
         return [
+            'nama_rapat' => 'required',
             'tanggal_rapat' => 'required',
-            'mahasiswa' => 'required',
-            'dosen' => 'required',
-            'tendik' => 'required',
-            'sarpras' => 'required',
-            'bukti_presensi_kehadiran' => 'required',
-            'tanda_tangan_kadep' => 'required',
-            'tanda_tangan_kaprodi' => 'required'
+            'jam_rapat' => 'required',
+            'tempat' => 'required',
+            'pemimpin_rapat' => 'required',
+            'pencatat' => 'required',
+            'nama_jabatan_pejabat' => 'required',
+            'tanda_tangan_pejabat' => 'required',
+            'nama_pejabat' => 'required',
+            'NIP_pejabat' => 'required',
+            'bukti_presensi_kehadiran'=> 'required'
         ];
     }
 }
