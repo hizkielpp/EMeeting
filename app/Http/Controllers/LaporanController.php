@@ -55,7 +55,6 @@ class LaporanController extends Controller
                 // Load the template file
                 if(is_null($laporan->file_pendukung_rapat)&&is_null($laporan->nama_KSM)) $templateProcessor = new TemplateProcessor(public_path('templateOutput.docx'));
                 elseif(is_null($laporan->nama_KSM)) {
-                    return 'oke'
                     $templateProcessor = new TemplateProcessor(public_path('templateOutputFilePendukung.docx'));
                     $templateProcessor->setImageValue('file_pendukung_rapat', array(
                         'path' =>"bukti/$laporan->file_pendukung_rapat",
