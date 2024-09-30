@@ -15,9 +15,9 @@ class AuthController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'pimpinan') {
-            return view('remake.create_laporan');
+            return view('remake.index_pimpinan');
         } else {
-            return view('index');
+            return view('remake.create_laporan');
         }
     }
     public function index_register()
@@ -49,5 +49,23 @@ class AuthController extends Controller
         Session::flush();
         Auth::logout();
         return redirect('login')->with('success', "Berhasil logout");
+    }
+    public function profile()
+    {
+        return view('remake.profile');
+    }
+    public function ubah_password(Request $request)
+    {
+        try {
+            // return $request;
+            if ($request->password !== $request->password_konfirmasi) return redirect()->back()->with('error', 'Gagal mengubah password karena password dan kofirmasinya tidak sesuai<br>tolong pastikan keduanya sesuai');
+            $user = User::find(Auth::id());
+            $user->nickname = $request->nickname;
+            $user->password = $request->password;
+            $user->save();
+            return redirect()->back()->with('success', "Berhasil merubah password mu <br>Passwordmu adalah $request->password");
+        } catch (\Exception $e) {
+            return $e;
+        }
     }
 }

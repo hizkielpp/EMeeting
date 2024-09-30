@@ -38,6 +38,8 @@
                                     </div>
                                     <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4">Sign
                                         In</button>
+                                    <span class="text-center">Hubungi IT Fakultas Kedokteran untuk penanganan lupa
+                                        password</span>
                                 </form>
                             </div>
                         </div>
