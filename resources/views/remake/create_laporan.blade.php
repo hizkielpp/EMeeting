@@ -191,7 +191,7 @@
                                 prestasi mahasiswa, dan segala hal lain yang berhubungan dengan
                                 mahasiswa Fakultas
                                 Kedokteran</span></label>
-                        <textarea name="mahasiswa" id="mahasiswa" class="form-control" id="" cols="30" rows="10"
+                        <textarea name="mahasiswa" id="mahasiswa" class="form-control valued" id="" cols="30" rows="10"
                             required></textarea>
                         <div class="invalid-feedback">
                             Perihal mahasiswa harus diisi.
@@ -205,7 +205,7 @@
                                 berprestasi, dan segala hal lain
                                 yang
                                 berhubungan dengan dosen Fakultas Kedokteran</span></label>
-                        <textarea maxlength="1200" name="dosen" id="dosen" class="form-control" id="" cols="30"
+                        <textarea maxlength="1200" name="dosen" id="dosen" class="form-control valued" id="" cols="30"
                             rows="10" required></textarea>
                         <div class="invalid-feedback">
                             Perihal dosen harus diisi.
@@ -221,7 +221,7 @@
                                 professional), dan segala hal
                                 lain
                                 yang berhubungan dengan tendik Fakultas Kedokteran</span></label>
-                        <textarea maxlength="1200" name="tendik" id="tendik" class="form-control" id="" cols="30"
+                        <textarea maxlength="1200" name="tendik" id="tendik" class="form-control valued" id="" cols="30"
                             rows="10" required></textarea>
                         <div class="invalid-feedback">
                             Perihal tendik harus diisi.
@@ -235,7 +235,7 @@
                                 dibutuhkan, dan segala hal lain yang berhubungan dengan sarana
                                 prasarana di Fakultas
                                 Kedokteran</span></label>
-                        <textarea maxlength="1200" name="sarpras" id="sarpras" class="form-control" id="" cols="30"
+                        <textarea maxlength="1200" name="sarpras" id="sarpras" class="form-control valued" id="" cols="30"
                             rows="10" required></textarea>
                         <div class="invalid-feedback">
                             Perihal sarana prasarana harus diisi.
@@ -247,13 +247,13 @@
                                 yang tidak termasuk 4 perihal
                                 diatas
                                 dapat dituliskan disini</span></label>
-                        <textarea name="lain_lain" id="lain_lain" class="form-control" id="" cols="30" rows="10"
+                        <textarea name="lain_lain" id="lain_lain" class="form-control valued" id="" cols="30" rows="10"
                             maxlength="1200"> </textarea>
                     </div>
                 </div>
                 <div>
                     <label for="tanggapan_peserta_rapat">Tanggapan Peserta Rapat<span class="text-danger">*</span></label>
-                    <textarea maxlength="1200" name="tanggapan_peserta_rapat" id="tanggapan_peserta_rapat" class="form-control"
+                    <textarea maxlength="1200" name="tanggapan_peserta_rapat" id="tanggapan_peserta_rapat" class="form-control valued"
                         cols="30" rows="10" required></textarea>
                     <div class="invalid-feedback">
                         Tanggapan peserta rapat harus diisi.
@@ -261,8 +261,8 @@
                 </div>
                 <div>
                     <label for="simpulan">Simpulan<span class="text-danger">*</span></label>
-                    <textarea maxlength="1200" name="simpulan" id="simpulan" class="form-control" cols="30" rows="10"
-                        required></textarea>
+                    <textarea maxlength="1200" name="simpulan" id="simpulan" class="form-control valued" cols="30"
+                        rows="10" required></textarea>
                     <div class="invalid-feedback">
                         Simpulan harus diisi.
                     </div>
@@ -422,54 +422,11 @@
         set_canvas('tanda_tangan_ksm')
     </script>
     <script>
-        $.ajax({
-            type: 'get',
-            url: 'http://metaphorpsum.com/paragraphs/1/20',
-            success: function(response) {
-                $('#mahasiswa').html(response)
-            }
-        });
-        $.ajax({
-            type: 'get',
-            url: 'http://metaphorpsum.com/paragraphs/1/20',
-            success: function(response) {
-                $('#dosen').html(response)
-            }
-        });
-        $.ajax({
-            type: 'get',
-            url: 'http://metaphorpsum.com/paragraphs/1/20',
-            success: function(response) {
-                $('#simpulan').html(response)
-            }
-        });
-        $.ajax({
-            type: 'get',
-            url: 'http://metaphorpsum.com/paragraphs/1/20',
-            success: function(response) {
-                $('#tanggapan_peserta_rapat').html(response)
-            }
-        });
-        $.ajax({
-            type: 'get',
-            url: 'http://metaphorpsum.com/paragraphs/1/20',
-            success: function(response) {
-                $('#tendik').html(response)
-            }
-        });
-        $.ajax({
-            type: 'get',
-            url: 'http://metaphorpsum.com/paragraphs/1/20',
-            success: function(response) {
-                $('#sarpras').html(response)
-            }
-        });
-        $.ajax({
-            type: 'get',
-            url: 'http://metaphorpsum.com/paragraphs/1/20',
-            success: function(response) {
-                $('#lain_lain').html(response)
-            }
-        });
+        $('.valued').html(`testtttt
+okeee
+testttt
+okeee
+testttt
+okeeeee`)
     </script>
 @endsection

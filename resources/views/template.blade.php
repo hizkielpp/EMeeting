@@ -54,7 +54,7 @@
                         href="{{ url('/') }}"><i class="fa-solid fa-sheet-plastic"></i>
                         Tulis
                         Laporan</a></li>
-                <li><a class="dropdown-item fs__child {{ Request::is('riwayat_laporan*') ? 'active' : '' }}"
+                <li><a class="dropdown-item fs__child {{ Request::is('/riwayat_laporan*') ? 'active' : '' }}"
                         href="{{ url('riwayat_laporan') }}"><i class="fa fa-history" aria-hidden="true"></i>
                         Riwayat
                         Laporan</a></li>

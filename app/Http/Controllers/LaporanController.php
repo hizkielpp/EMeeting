@@ -20,6 +20,7 @@ class LaporanController extends Controller
     {
         try {
             $data = $request->validationData();
+            // $data['array'] = array_merge(preg_split('/\n|\r\n?/', $data['mahasiswa']));
             if (isset($data['bukti_presensi_kehadiran'])) {
                 $filename_presensi_kehadiran = auth()->id() . '_' . rand(10000, 99999) . '_' . auth()->id() . '.' . $request->bukti_presensi_kehadiran->extension();
                 $type = $request->bukti_presensi_kehadiran->getClientMimeType();
@@ -91,9 +92,31 @@ class LaporanController extends Controller
             dd('File not found');
         }
     }
-    public function riwayat_laporan()
+    public function riwayat_laporan(Request $request)
     {
-        $laporans = Laporan::where('fk_user', Auth::id())->orderBy('tanggal_rapat', 'asc')->get();
+        // Get the search query from the input
+        $search = $request->input('search');
+
+        // Fetch reports with pagination and search filter
+        $laporans = Laporan::when($search, function ($query, $search) {
+            return $query->where('nama_rapat', 'like', '%' . $search . '%')
+                ->orWhere('tempat', 'like', '%' . $search . '%')
+                ->orWhere('pencatat', 'like', '%' . $search . '%');
+        })->paginate(1);
+        foreach ($laporans as $value) {
+            $value['persoalan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['persoalan_yang_dibahas']));
+            $value['tanggapan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['tanggapan_peserta_rapat']));
+            $value['simpulan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['simpulan']));
+        }
+
+        // Return view with the paginated data
+        return view('remake.riwayat_laporan', compact('laporans', 'search'));
+        $laporans = Laporan::where('fk_user', Auth::id())->orderBy('tanggal_rapat', 'asc')->paginate(1);
+        foreach ($laporans as $value) {
+            $value['persoalan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['persoalan_yang_dibahas']));
+            $value['tanggapan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['tanggapan_peserta_rapat']));
+            $value['simpulan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['simpulan']));
+        }
         return view('remake.riwayat_laporan')->with(['laporans' => $laporans]);
     }
     public function print_laporan(Request $request)

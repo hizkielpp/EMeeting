@@ -42,7 +42,8 @@
                     </ul>
                     <ul id="sidebarnav">
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('profile') }}" aria-expanded="false">
+                            <a class="sidebar-link {{ Request::is('profile*') ? 'active' : '' }}"
+                                href="{{ route('profile') }}" aria-expanded="false">
                                 <span>
                                     <iconify-icon icon="teenyicons:google-streetview-solid"
                                         class="fs-6"></iconify-icon>
@@ -53,11 +54,13 @@
                     </ul>
                     <ul id="sidebarnav">
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('riwayat_laporan') }}" aria-expanded="false">
+                            <a class="sidebar-link {{ Request::is('riwayat_laporan*') ? 'active' : '' }}"
+                                href="{{ route('riwayat_laporan') }}" aria-expanded="false">
                                 <span>
                                     <iconify-icon icon="teenyicons:history-outline"></iconify-icon>
                                 </span>
-                                <span class="hide-menu">Riwayat Laporan</span>
+                                <span class="hide-menu">Riwayat Laporan
+                                </span>
                             </a>
                         </li>
                     </ul>
