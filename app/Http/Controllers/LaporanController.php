@@ -11,6 +11,7 @@ use App\Models\Peserta;
 use App\Models\Susunan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use PhpOffice\PhpWord\TemplateProcessor;
 
@@ -20,7 +21,6 @@ class LaporanController extends Controller
     {
         try {
             $data = $request->validationData();
-            // $data['array'] = array_merge(preg_split('/\n|\r\n?/', $data['mahasiswa']));
             if (isset($data['bukti_presensi_kehadiran'])) {
                 $filename_presensi_kehadiran = auth()->id() . '_' . rand(10000, 99999) . '_' . auth()->id() . '.' . $request->bukti_presensi_kehadiran->extension();
                 $type = $request->bukti_presensi_kehadiran->getClientMimeType();
@@ -59,31 +59,31 @@ class LaporanController extends Controller
             return $e;
         }
     }
-    public function edit_laporan(EditLaporanRequest $request)
-    {
-        $data = $request->validationData();
-        if (isset($data['bukti_presensi'])) {
-            $fileName = auth()->id() . '_' . time() . '.' . $request->bukti_presensi->extension();
-            $type = $request->bukti_presensi->getClientMimeType();
-            $size = $request->bukti_presensi->getSize();
-            $request->bukti_presensi->move('bukti', $fileName);
-            $data['bukti_presensi'] = $fileName;
-        }
-        if (isset($data['tanda_tangan_kadep'])) {
-            $fileName = auth()->id() . '_' . time() . '.' . $request->tanda_tangan_kadep->extension();
-            $type = $request->tanda_tangan_kadep->getClientMimeType();
-            $size = $request->tanda_tangan_kadep->getSize();
-            $request->tanda_tangan_kadep->move('bukti', $fileName);
-            $data['tanda_tangan_kadep'] = $fileName;
-        }
-        if (isset($data['tanda_tangan_kaprodi'])) {
-            $fileName = auth()->id() . '_' . time() . '.' . $request->tanda_tangan_kaprodi->extension();
-            $type = $request->tanda_tangan_kaprodi->getClientMimeType();
-            $size = $request->tanda_tangan_kaprodi->getSize();
-            $request->tanda_tangan_kaprodi->move('bukti', $fileName);
-            $data['tanda_tangan_kaprodi'] = $fileName;
-        }
-    }
+    // public function edit_laporan(EditLaporanRequest $request)
+    // {
+    //     $data = $request->validationData();
+    //     if (isset($data['bukti_presensi'])) {
+    //         $fileName = auth()->id() . '_' . time() . '.' . $request->bukti_presensi->extension();
+    //         $type = $request->bukti_presensi->getClientMimeType();
+    //         $size = $request->bukti_presensi->getSize();
+    //         $request->bukti_presensi->move('bukti', $fileName);
+    //         $data['bukti_presensi'] = $fileName;
+    //     }
+    //     if (isset($data['tanda_tangan_kadep'])) {
+    //         $fileName = auth()->id() . '_' . time() . '.' . $request->tanda_tangan_kadep->extension();
+    //         $type = $request->tanda_tangan_kadep->getClientMimeType();
+    //         $size = $request->tanda_tangan_kadep->getSize();
+    //         $request->tanda_tangan_kadep->move('bukti', $fileName);
+    //         $data['tanda_tangan_kadep'] = $fileName;
+    //     }
+    //     if (isset($data['tanda_tangan_kaprodi'])) {
+    //         $fileName = auth()->id() . '_' . time() . '.' . $request->tanda_tangan_kaprodi->extension();
+    //         $type = $request->tanda_tangan_kaprodi->getClientMimeType();
+    //         $size = $request->tanda_tangan_kaprodi->getSize();
+    //         $request->tanda_tangan_kaprodi->move('bukti', $fileName);
+    //         $data['tanda_tangan_kaprodi'] = $fileName;
+    //     }
+    // }
     public function hapus_file($namafile)
     {
         if (File::exists('bukti//' . $namafile)) {
@@ -101,8 +101,11 @@ class LaporanController extends Controller
         $laporans = Laporan::when($search, function ($query, $search) {
             return $query->where('nama_rapat', 'like', '%' . $search . '%')
                 ->orWhere('tempat', 'like', '%' . $search . '%')
-                ->orWhere('pencatat', 'like', '%' . $search . '%');
-        })->paginate(1);
+                ->orWhere('pencatat', 'like', '%' . $search . '%')
+                ->orWhere('pemimpin_rapat', 'like', '%' . $search . '%');
+        })
+            ->orderBy('tanggal_rapat', 'desc')
+            ->paginate(5);
         foreach ($laporans as $value) {
             $value['persoalan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['persoalan_yang_dibahas']));
             $value['tanggapan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['tanggapan_peserta_rapat']));
@@ -111,13 +114,13 @@ class LaporanController extends Controller
 
         // Return view with the paginated data
         return view('remake.riwayat_laporan', compact('laporans', 'search'));
-        $laporans = Laporan::where('fk_user', Auth::id())->orderBy('tanggal_rapat', 'asc')->paginate(1);
-        foreach ($laporans as $value) {
-            $value['persoalan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['persoalan_yang_dibahas']));
-            $value['tanggapan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['tanggapan_peserta_rapat']));
-            $value['simpulan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['simpulan']));
-        }
-        return view('remake.riwayat_laporan')->with(['laporans' => $laporans]);
+        // $laporans = Laporan::where('fk_user', Auth::id())->orderBy('tanggal_rapat', 'asc')->paginate(1);
+        // foreach ($laporans as $value) {
+        //     $value['persoalan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['persoalan_yang_dibahas']));
+        //     $value['tanggapan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['tanggapan_peserta_rapat']));
+        //     $value['simpulan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['simpulan']));
+        // }
+        // return view('remake.riwayat_laporan')->with(['laporans' => $laporans]);
     }
     public function print_laporan(Request $request)
     {
@@ -216,6 +219,55 @@ class LaporanController extends Controller
             header('Cache-Control: max-age=0'); //no cache
             header('Content-Disposition: attachment;filename="output_rapat.docx"'); //tell browser what's the file name
             $templateProcessor->saveAs('php://output');
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
+    public function edit_laporan(Request $request)
+    {
+        $laporan = Laporan::with('susunans', 'pesertas')->find($request->id);
+        return view('remake.edit_laporan', compact('laporan'));
+    }
+    public function update_laporan(EditLaporanRequest $request)
+    {
+        try {
+            $data = $request->validationData();
+            $laporan = Laporan::find($request->id_laporan);
+            if (isset($data['bukti_presensi_kehadiran'])) {
+                $fileName = auth()->id() . '_' . rand(10000, 99999) . '_' . auth()->id() . '.' . $request->bukti_presensi_kehadiran->extension();
+                $type = $request->bukti_presensi_kehadiran->getClientMimeType();
+                $size = $request->bukti_presensi_kehadiran->getSize();
+                $request->bukti_presensi_kehadiran->move('bukti', $fileName);
+                $data['bukti_presensi_kehadiran'] = $fileName;
+                $this->hapus_file($laporan->bukti_presensi_kehadiran);
+            }
+            if (isset($data['file_pendukung_rapat'])) {
+                $fileName = auth()->id() . '_' . rand(10000, 99999) . '_' . auth()->id() . '.' . $request->file_pendukung_rapat->extension();
+                $type = $request->file_pendukung_rapat->getClientMimeType();
+                $size = $request->file_pendukung_rapat->getSize();
+                $request->file_pendukung_rapat->move('bukti', $fileName);
+                $data['file_pendukung_rapat'] = $fileName;
+                $this->hapus_file($laporan->file_pendukung_rapat);
+            }
+            Peserta::where('fk_laporan', $laporan->id)->delete();
+            foreach ($data['peserta_rapat'] as $val) {
+                $peserta = new Peserta();
+                $peserta->fk_laporan = $laporan->id;
+                $peserta->nama_peserta = $val;
+                $peserta->save();
+            }
+            Susunan::where('fk_laporan', $laporan->id)->delete();
+            foreach ($data['susunan_acara'] as $val) {
+                $peserta = new Susunan();
+                $peserta->fk_laporan = $laporan->id;
+                $peserta->nama_susunan = $val;
+                $peserta->save();
+            }
+            $data['tanggal_rapat'] = $data['tanggal_rapat'] . ' ' . $data['jam_rapat'] . ':00';
+            $data['tanggal_rapat'] = date_format(date_create($data['tanggal_rapat']), 'Y-m-d H:i:s');
+            unset($data['jam_rapat']);
+            $laporan->update($data);
+            return redirect()->back()->with('success', 'Berhasil mengubah laporan');
         } catch (\Exception $e) {
             return $e;
         }

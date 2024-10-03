@@ -56,3 +56,5 @@ Route::get('template', function () {
     return view('remake.template');
 });
 Route::put('ubah_password', [AuthController::class, 'ubah_password'])->name('ubah_password');
+Route::get('edit_laporan', [LaporanController::class, 'edit_laporan'])->name('edit_laporan');
+Route::put('update_laporan', [LaporanController::class, 'update_laporan'])->name('update_laporan');

@@ -217,10 +217,11 @@
                                     </td>
                                     <td class="align-top">
                                         <div class="d-flex flex-column gap-3">
-                                            <iconify-icon class="text-black fs-6 pointer w-100" data-toggle="tooltip"
-                                                data-placement="top" title="Edit" icon="teenyicons:edit-1-solid"
-                                                style="cursor: pointer"></iconify-icon>
-
+                                            <a href="{{ route('edit_laporan') . '?id=' . $item->id }}" target="_blank">
+                                                <iconify-icon class="text-black fs-6 pointer w-100" data-toggle="tooltip"
+                                                    data-placement="top" title="Edit" icon="teenyicons:edit-1-solid"
+                                                    style="cursor: pointer"></iconify-icon>
+                                            </a>
                                             <a href="{{ route('print_notula') . '?id=' . $item->id }}">
                                                 <iconify-icon class="text-black fs-6 pointer w-100" data-toggle="tooltip"
                                                     data-placement="top" title="Print" icon="teenyicons:print-solid"
