@@ -34,7 +34,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title fw-semibold mb-4">Tulis Notula</h5>
+            <h5 class="card-title fw-semibold mb-4">Ubah Notula</h5>
             {{-- create notula --}}
             <form class="needs-validation" action="{{ route('update_laporan') }}" method="POST" style="border-top: #006b1a 2px"
                 enctype="multipart/form-data" novalidate>

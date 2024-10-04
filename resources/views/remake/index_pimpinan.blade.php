@@ -4,7 +4,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Riwayat Laporan</h5>
+            <h5 class="card-title">Daftar Departemen/Prodi/Unit</h5>
             <div class="table-responsive">
                 <table class="table text-nowrap align-middle mb-0">
                     <thead>

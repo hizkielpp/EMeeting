@@ -15,7 +15,7 @@ class AuthController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'pimpinan') {
-            $users = User::all();
+            $users = User::where('role', '<>', 'pimpinan')->get();
             return view('remake.index_pimpinan', compact('users'));
         } else {
             return redirect('create_laporan');

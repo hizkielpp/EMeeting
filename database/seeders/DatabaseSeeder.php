@@ -20,14 +20,14 @@ class DatabaseSeeder extends Seeder
         (new User(['username' => 'S1 Dokter', 'nickname' => 'Hizkiel Putra Pakubumi', 'role' => 'bawahan', 'email' => 's1dokter@gmail.com', 'password' => 'password']))->save();
         User::all();
         foreach (User::all() as $value) {
-            for ($a = 1; $a <= 5; $a++) {
+            for ($a = 1; $a <= 20; $a++) {
                 $laporan = new Laporan([
                     'fk_user' => $value->id,
                     'nama_rapat' => 'Rapat ke-' . $a,
                     'tempat' => 'RSG',
                     'pemimpin_rapat' => 'Pak Musa',
                     'pencatat' => 'Pak Wawan',
-                    'tanggal_rapat' => '2024-03-2' . $a . ' 10:00:00',
+                    'tanggal_rapat' => '2024-03-' . $a . ' 10:00:00',
                     'bukti_presensi_kehadiran' => '2_48687_2.jpg',
                     'persoalan_yang_dibahas' =>
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum suscipit, mi a interdum mattis, leo dolor congue nunc, ut suscipit orci arcu sit amet erat. Mauris pellentesque turpis quis velit auctor tincidunt. Mauris suscipit ex ut bibendum semper. Cras quis leo orci. Sed posuere lorem ante, id molestie tortor laoreet a. Nunc sit amet congue felis, sed cursus tellus. Etiam semper ligula lacus, vel semper purus cursus sed. Nullam et efficitur diam, id pharetra velit. In nibh turpis, sollicitudin non viverra eget, convallis sed mi. Etiam hendrerit sed urna ut tempor. Nam interdum ex placerat, mattis erat vitae, luctus felis. Vivamus porttitor mauris in bibendum iaculis.
