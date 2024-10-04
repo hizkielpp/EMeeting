@@ -20,7 +20,7 @@
                                     {{ $u->username }}
                                 </td>
                                 <td class="text-end">
-                                    <a href="{{ route('print_notula') . '?id=' . $u->id }}">
+                                    <a href="{{ route('log_laporan_pimpinan') . '?id_user=' . $u->id }}">
                                         <iconify-icon class=" text-black fs-6 pointer" data-toggle="tooltip"
                                             data-placement="top" title="Lihat Detail Data"
                                             icon="gravity-ui:database-magnifier" style="cursor: pointer"></iconify-icon>

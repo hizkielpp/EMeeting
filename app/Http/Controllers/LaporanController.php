@@ -143,7 +143,7 @@ class LaporanController extends Controller
             $value['simpulan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['simpulan']));
         }
         // Return view with the paginated data
-        return view('remake.riwayat_laporan', compact('laporans', 'search'));
+        return view('remake.riwayat_laporan_pimpinan', compact('laporans', 'search'));
     }
     public function print_laporan(Request $request)
     {

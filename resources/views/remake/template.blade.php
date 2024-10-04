@@ -33,7 +33,8 @@
                     @if (Auth::user()->role == 'pimpinan')
                         <ul id="sidebarnav">
                             <li class="sidebar-item">
-                                <a class="sidebar-link" href="{{ route('monitor') }}" aria-expanded="false">
+                                <a class="sidebar-link {{ Request::is('log_laporan_pimpinan') ? 'active' : '' }}"
+                                    href="{{ route('monitor') }}" aria-expanded="false">
                                     <span>
                                         <iconify-icon icon="teenyicons:hd-screen-outline"></iconify-icon>
                                     </span>
@@ -54,7 +55,7 @@
                     </ul>
                     <ul id="sidebarnav">
                         <li class="sidebar-item">
-                            <a class="sidebar-link {{ Request::is('edit_password*') ? 'active' : '' }}"
+                            <a class="sidebar-link {{ Request::is('edit_password') ? 'active' : '' }}"
                                 href="{{ route('edit_password') }}" aria-expanded="false">
                                 <span>
                                     <iconify-icon icon="teenyicons:google-streetview-solid"
@@ -68,7 +69,7 @@
                     @endif
                     <ul id="sidebarnav">
                         <li class="sidebar-item">
-                            <a class="sidebar-link {{ Request::is('log_laporan*') || Request::is('edit_laporan*') ? 'active' : '' }}"
+                            <a class="sidebar-link {{ Request::is('log_laporan') || Request::is('edit_laporan') ? 'active' : '' }}"
                                 href="{{ route('log_laporan') }}" aria-expanded="false">
                                 <span>
                                     <iconify-icon icon="teenyicons:history-outline"></iconify-icon>
