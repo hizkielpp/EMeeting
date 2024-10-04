@@ -84,7 +84,11 @@ class LaporanController extends Controller
     //         $data['tanda_tangan_kaprodi'] = $fileName;
     //     }
     // }
-    public function hapus_file($namafile)
+    public function create_laporan()
+    {
+        return view('remake.create_laporan');
+    }
+    public function delete_file($namafile)
     {
         if (File::exists('bukti//' . $namafile)) {
             File::delete('bukti//' . $namafile);
@@ -92,18 +96,20 @@ class LaporanController extends Controller
             dd('File not found');
         }
     }
-    public function riwayat_laporan(Request $request)
+    public function log_laporan(Request $request)
     {
         // Get the search query from the input
         $search = $request->input('search');
-
-        // Fetch reports with pagination and search filter
+        // Fetch reports with pagination and search filter'
         $laporans = Laporan::when($search, function ($query, $search) {
-            return $query->where('nama_rapat', 'like', '%' . $search . '%')
-                ->orWhere('tempat', 'like', '%' . $search . '%')
-                ->orWhere('pencatat', 'like', '%' . $search . '%')
-                ->orWhere('pemimpin_rapat', 'like', '%' . $search . '%');
+            return $query->where(function ($query) use ($search) {
+                $query->where('nama_rapat', 'like', '%' . $search . '%')
+                    ->orWhere('tempat', 'like', '%' . $search . '%')
+                    ->orWhere('pencatat', 'like', '%' . $search . '%')
+                    ->orWhere('pemimpin_rapat', 'like', '%' . $search . '%');
+            });
         })
+            ->where('fk_user', '=', Auth::id())
             ->orderBy('tanggal_rapat', 'desc')
             ->paginate(5);
         foreach ($laporans as $value) {
@@ -111,16 +117,33 @@ class LaporanController extends Controller
             $value['tanggapan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['tanggapan_peserta_rapat']));
             $value['simpulan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['simpulan']));
         }
-
         // Return view with the paginated data
         return view('remake.riwayat_laporan', compact('laporans', 'search'));
-        // $laporans = Laporan::where('fk_user', Auth::id())->orderBy('tanggal_rapat', 'asc')->paginate(1);
-        // foreach ($laporans as $value) {
-        //     $value['persoalan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['persoalan_yang_dibahas']));
-        //     $value['tanggapan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['tanggapan_peserta_rapat']));
-        //     $value['simpulan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['simpulan']));
-        // }
-        // return view('remake.riwayat_laporan')->with(['laporans' => $laporans]);
+    }
+    public function log_laporan_pimpinan(Request $request)
+    {
+        // Get the search query from the input
+        $search = $request->input('search');
+        // Fetch reports with pagination and search filter'
+        $laporans = Laporan::when($search, function ($query, $search) {
+            return $query
+                ->where(function ($query) use ($search) {
+                    $query->where('nama_rapat', 'like', '%' . $search . '%')
+                        ->orWhere('tempat', 'like', '%' . $search . '%')
+                        ->orWhere('pencatat', 'like', '%' . $search . '%')
+                        ->orWhere('pemimpin_rapat', 'like', '%' . $search . '%');
+                });
+        })
+            ->where('fk_user', '=', $request->id_user)
+            ->orderBy('tanggal_rapat', 'desc')
+            ->paginate(5);
+        foreach ($laporans as $value) {
+            $value['persoalan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['persoalan_yang_dibahas']));
+            $value['tanggapan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['tanggapan_peserta_rapat']));
+            $value['simpulan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['simpulan']));
+        }
+        // Return view with the paginated data
+        return view('remake.riwayat_laporan', compact('laporans', 'search'));
     }
     public function print_laporan(Request $request)
     {
@@ -239,7 +262,7 @@ class LaporanController extends Controller
                 $size = $request->bukti_presensi_kehadiran->getSize();
                 $request->bukti_presensi_kehadiran->move('bukti', $fileName);
                 $data['bukti_presensi_kehadiran'] = $fileName;
-                $this->hapus_file($laporan->bukti_presensi_kehadiran);
+                $this->delete_file($laporan->bukti_presensi_kehadiran);
             }
             if (isset($data['file_pendukung_rapat'])) {
                 $fileName = auth()->id() . '_' . rand(10000, 99999) . '_' . auth()->id() . '.' . $request->file_pendukung_rapat->extension();
@@ -247,7 +270,7 @@ class LaporanController extends Controller
                 $size = $request->file_pendukung_rapat->getSize();
                 $request->file_pendukung_rapat->move('bukti', $fileName);
                 $data['file_pendukung_rapat'] = $fileName;
-                $this->hapus_file($laporan->file_pendukung_rapat);
+                $this->delete_file($laporan->file_pendukung_rapat);
             }
             Peserta::where('fk_laporan', $laporan->id)->delete();
             foreach ($data['peserta_rapat'] as $val) {

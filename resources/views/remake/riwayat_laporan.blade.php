@@ -7,7 +7,7 @@
             <h5 class="card-title">Riwayat Laporan</h5>
 
             <!-- Search Form -->
-            <form action="{{ route('riwayat_laporan') }}" method="GET" class="mb-4">
+            <form action="{{ route('log_laporan') }}" method="GET" class="mb-4">
                 <div class="input-group">
                     <input type="text" name="search" class="form-control" placeholder="Cari laporan..."
                         value="{{ request('search') }}">
@@ -217,11 +217,14 @@
                                     </td>
                                     <td class="align-top">
                                         <div class="d-flex flex-column gap-3">
-                                            <a href="{{ route('edit_laporan') . '?id=' . $item->id }}" target="_blank">
-                                                <iconify-icon class="text-black fs-6 pointer w-100" data-toggle="tooltip"
-                                                    data-placement="top" title="Edit" icon="teenyicons:edit-1-solid"
-                                                    style="cursor: pointer"></iconify-icon>
-                                            </a>
+                                            @if (Auth::user()->role == 'bawahan')
+                                                <a href="{{ route('edit_laporan') . '?id=' . $item->id }}" target="_blank">
+                                                    <iconify-icon class="text-black fs-6 pointer w-100"
+                                                        data-toggle="tooltip" data-placement="top" title="Edit"
+                                                        icon="teenyicons:edit-1-solid"
+                                                        style="cursor: pointer"></iconify-icon>
+                                                </a>
+                                            @endif
                                             <a href="{{ route('print_notula') . '?id=' . $item->id }}">
                                                 <iconify-icon class="text-black fs-6 pointer w-100" data-toggle="tooltip"
                                                     data-placement="top" title="Print" icon="teenyicons:print-solid"

@@ -21,40 +21,41 @@ Route::group(['middleware' => ['guest']], function () {
     /**
      * Register Routes
      */
-    Route::get('/register', [AuthController::class, 'index_register'])->name('index_register');
-    Route::post('/register', [AuthController::class, 'register'])->name('register');
-
+    Route::get('register', [AuthController::class, 'index_register'])->name('index_register');
+    Route::post('register', [AuthController::class, 'register'])->name('register');
     /**
      * Login Routes
      */
-    Route::get('/login', [AuthController::class, 'index_login'])->name('index_login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::get('login', [AuthController::class, 'index_login'])->name('index_login');
+    Route::post('login', [AuthController::class, 'login'])->name('login');
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    /** Index (Formulir Laporan) Route */
-    Route::get('/', [AuthController::class, 'index'])->name('index');
-    /**
-     * Logout Routes
-     */
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout.perform');
+    /** Monitor Route */
+    // Get view of index to access monitor page
+    Route::get('/', [AuthController::class, 'index'])->name('monitor');
+    /** Logout Routes*/
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout.perform');
     /** Laporan Route */
-    Route::get('/riwayat_laporan', [LaporanController::class, 'riwayat_laporan'])->name('riwayat_laporan');
-    Route::POST('/input_laporan', [LaporanController::class, 'input_laporan'])->name('input_laporan');
-    Route::get('/hapus_file/{filename}', [LaporanController::class, 'hapus_file'])->name('hapus_file');
+    // Get View of create laporan
+    Route::get('create_laporan', [LaporanController::class, 'create_laporan'])->name('create_laporan');
+    // Get View of Log Laporan
+    Route::get('log_laporan', [LaporanController::class, 'log_laporan'])->name('log_laporan');
+    // Get View of Log Laporan from Pimpinan
+    Route::get('log_laporan_pimpinan', [LaporanController::class, 'log_laporan_pimpinan'])->name('log_laporan_pimpinan');
+    // Post method to create laporan
+    Route::post('input_laporan', [LaporanController::class, 'input_laporan'])->name('input_laporan');
+    // Get to delete file
+    Route::get('delete_file/{filename}', [LaporanController::class, 'delete_file'])->name('delete_file');
+    // Get view edit laporan
+    Route::get('edit_laporan', [LaporanController::class, 'edit_laporan'])->name('edit_laporan');
+    // Put method to update a laporan
+    Route::put('update_laporan', [LaporanController::class, 'update_laporan'])->name('update_laporan');
     /** Profile Route */
-    Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+    // Get view of change password
+    Route::get('edit_password', [AuthController::class, 'edit_password'])->name('edit_password');
+    // Put method to change password
+    Route::put('update_password', [AuthController::class, 'update_password'])->name('update_password');
+    // Route to print notula of the laporan
+    Route::get('print_notula', [LaporanController::class, 'print_laporan'])->name('print_notula');
 });
-Route::get('lihat_notula', function () {
-    return view('notula');
-});
-Route::get('print_notula', [LaporanController::class, 'print_laporan'])->name('print_notula');
-Route::get('old_index', function () {
-    return view('index');
-});
-Route::get('template', function () {
-    return view('remake.template');
-});
-Route::put('ubah_password', [AuthController::class, 'ubah_password'])->name('ubah_password');
-Route::get('edit_laporan', [LaporanController::class, 'edit_laporan'])->name('edit_laporan');
-Route::put('update_laporan', [LaporanController::class, 'update_laporan'])->name('update_laporan');

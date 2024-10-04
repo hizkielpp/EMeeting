@@ -30,32 +30,46 @@
                 </div>
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+                    @if (Auth::user()->role == 'pimpinan')
+                        <ul id="sidebarnav">
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ route('monitor') }}" aria-expanded="false">
+                                    <span>
+                                        <iconify-icon icon="teenyicons:hd-screen-outline"></iconify-icon>
+                                    </span>
+                                    <span class="hide-menu">Monitor</span>
+                                </a>
+                            </li>
+                        </ul>
+                    @endif
                     <ul id="sidebarnav">
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('index') }}" aria-expanded="false">
+                            <a class="sidebar-link" href="{{ route('create_laporan') }}" aria-expanded="false">
                                 <span>
                                     <iconify-icon icon="teenyicons:cost-estimate-outline"></iconify-icon>
                                 </span>
-                                <span class="hide-menu">Home</span>
+                                <span class="hide-menu">Buat Laporan</span>
                             </a>
                         </li>
                     </ul>
                     <ul id="sidebarnav">
                         <li class="sidebar-item">
-                            <a class="sidebar-link {{ Request::is('profile*') ? 'active' : '' }}"
-                                href="{{ route('profile') }}" aria-expanded="false">
+                            <a class="sidebar-link {{ Request::is('edit_password*') ? 'active' : '' }}"
+                                href="{{ route('edit_password') }}" aria-expanded="false">
                                 <span>
                                     <iconify-icon icon="teenyicons:google-streetview-solid"
                                         class="fs-6"></iconify-icon>
                                 </span>
-                                <span class="hide-menu">Profile</span>
+                                <span class="hide-menu">Ubah Password</span>
                             </a>
                         </li>
                     </ul>
+                    @if (Auth::user()->role == 'bawahan')
+                    @endif
                     <ul id="sidebarnav">
                         <li class="sidebar-item">
-                            <a class="sidebar-link {{ Request::is('riwayat_laporan*') ? 'active' : '' }}"
-                                href="{{ route('riwayat_laporan') }}" aria-expanded="false">
+                            <a class="sidebar-link {{ Request::is('log_laporan*') || Request::is('edit_laporan*') ? 'active' : '' }}"
+                                href="{{ route('log_laporan') }}" aria-expanded="false">
                                 <span>
                                     <iconify-icon icon="teenyicons:history-outline"></iconify-icon>
                                 </span>
@@ -91,9 +105,13 @@
                                     <img src="../assets/images/profile/user-1.jpg" alt="" width="35"
                                         height="35" class="rounded-circle">
                                 </a>
+
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
                                     aria-labelledby="drop2">
                                     <div class="message-body">
+                                        <div class="mx-3 mt-2 d-block">
+                                            Halo <br>{{ Auth::user()->nickname }}</div>
+
                                         <a href="{{ route('logout.perform') }}"
                                             class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                                     </div>

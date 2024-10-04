@@ -36,18 +36,10 @@
         <div class="card-body">
             <h5 class="card-title fw-semibold mb-4">Profile</h5>
             {{-- create notula --}}
-            <form class="needs-validation" action="{{ route('ubah_password') }}" method="POST" style="border-top: #006b1a 2px"
-                enctype="multipart/form-data" novalidate>
+            <form class="needs-validation" action="{{ route('update_password') }}" method="POST"
+                style="border-top: #006b1a 2px" enctype="multipart/form-data" novalidate>
                 @method('PUT')
                 @csrf
-                <div class="mb-3">
-                    <label class="form-label">Nama User<span class="text-danger">*</span></label>
-                    <input type="text" value="{{ Auth::user()->nickname }}" name="nickname" class="form-control"
-                        required>
-                    <div class="invalid-feedback">
-                        Nama user harus diisi.
-                    </div>
-                </div>
                 <div class="mb-3">
                     <label class="form-label">Password<span class="text-danger">*</span></label>
                     <input type="password" name="password" class="form-control" required>
