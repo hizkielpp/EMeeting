@@ -237,7 +237,7 @@
 
                 <!-- Pagination Links -->
                 <div class="d-flex justify-content-center mt-4">
-                    {{ $laporans->appends(['search' => request('search')])->links('pagination::bootstrap-5') }}
+                    {{ $laporans->appends(['search' => request('search'), 'id_user' => request('id_user')])->links('pagination::bootstrap-5') }}
                 </div>
             </div>
 

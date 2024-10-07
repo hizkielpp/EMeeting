@@ -11,8 +11,9 @@ use App\Models\Peserta;
 use App\Models\Susunan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Barryvdh\DomPDF\Facade\Pdf;
+use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 class LaporanController extends Controller
@@ -294,5 +295,22 @@ class LaporanController extends Controller
         } catch (\Exception $e) {
             return $e;
         }
+    }
+    public function word_to_pdf()
+    {
+        // Load the DOCX file
+        $docxPath = 'templateOutput.docx';
+        $phpWord = IOFactory::load($docxPath);
+        // Convert to HTML
+        $htmlWriter = IOFactory::createWriter($phpWord, 'HTML');
+        ob_start();
+        $htmlWriter->save('php://output');
+        $htmlContent = ob_get_contents();
+        ob_end_clean();
+        // Convert HTML to PDF
+        $pdf = Pdf::loadHTML($htmlContent);
+
+        // Save and Stream the PDF
+        return $pdf->save('outputAsPDF.pdf')->stream('download.pdf');
     }
 }

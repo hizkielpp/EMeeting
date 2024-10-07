@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +15,6 @@ use App\Http\Controllers\LaporanController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 
 
 Route::group(['middleware' => ['guest']], function () {
@@ -58,4 +58,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('update_password', [AuthController::class, 'update_password'])->name('update_password');
     // Route to print notula of the laporan
     Route::get('print_notula', [LaporanController::class, 'print_laporan'])->name('print_notula');
+    // Users Route
+    Route::get('users', [UserController::class, 'index'])->name('users');
 });
+// Route to word to pdf
+Route::get('word_to_pdf', [LaporanController::class, 'word_to_pdf'])->name('word_to_pdf');

@@ -79,6 +79,18 @@
                             </a>
                         </li>
                     </ul>
+                    <ul id="sidebarnav">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link {{ Request::is('users') ? 'active' : '' }}"
+                                href="{{ route('users') }}" aria-expanded="false">
+                                <span>
+                                    <iconify-icon icon="teenyicons:address-book-solid"></iconify-icon>
+                                </span>
+                                <span class="hide-menu">Managemen Pengguna
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>
