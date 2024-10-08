@@ -23,17 +23,28 @@ class AuthController extends Controller
     }
     public function index_register()
     {
-        return view('register');
+        return view('remake.authentication.register');
     }
     public function register(RegisterRequest $request)
     {
-        $user = User::create($request->validationData());
-        auth()->login($user);
-        return redirect('/')->with('success', "Akun telah berhasil dibuat");
+        try {
+
+            $user = new User();
+            $user->nickname = $request->nickname;
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->role = 'bawahan';
+            $user->password = 'abc';
+            $user->save();
+            auth()->login($user);
+            return redirect('/')->with('success', "Akun telah berhasil dibuat");
+        } catch (\Exception $e) {
+            return $e;
+        }
     }
     public function index_login()
     {
-        return view('remake.authentication-login');
+        return view('remake.authentication.login');
     }
     public function login(LoginRequest $request)
     {
@@ -51,9 +62,11 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('login')->with('success', "Berhasil logout");
     }
-    public function edit_password()
+    public function edit_password(Request $request)
     {
-        return view('remake.edit_password');
+        // get user from id
+        $user = User::find($request->id);
+        return view('remake.authentication.edit', compact('user'));
     }
     public function update_password(Request $request)
     {

@@ -60,6 +60,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('print_notula', [LaporanController::class, 'print_laporan'])->name('print_notula');
     // Users Route
     Route::get('users', [UserController::class, 'index'])->name('users');
+    // Get view of change password
+    Route::get('edit_user', [UserController::class, 'edit'])->name('edit_user');
+    // Update of change password
+    Route::put('update_user', [UserController::class, 'update'])->name('update_user');
 });
-// Route to word to pdf
-Route::get('word_to_pdf', [LaporanController::class, 'word_to_pdf'])->name('word_to_pdf');

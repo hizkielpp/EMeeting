@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('jquery-ui-1.9.2.custom/css/base/jquery-ui-1.9.2.custom.css') }}">
     @yield('css')
+    <style>
+        .bc {
+            color: black !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -79,18 +84,20 @@
                             </a>
                         </li>
                     </ul>
-                    <ul id="sidebarnav">
-                        <li class="sidebar-item">
-                            <a class="sidebar-link {{ Request::is('users') ? 'active' : '' }}"
-                                href="{{ route('users') }}" aria-expanded="false">
-                                <span>
-                                    <iconify-icon icon="teenyicons:address-book-solid"></iconify-icon>
-                                </span>
-                                <span class="hide-menu">Managemen Pengguna
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
+                    @if (Auth::user()->role == 'admin')
+                        <ul id="sidebarnav">
+                            <li class="sidebar-item">
+                                <a class="sidebar-link {{ Request::is('users') || Request::is('edit_user') ? 'active' : '' }}"
+                                    href="{{ route('users') }}" aria-expanded="false">
+                                    <span>
+                                        <iconify-icon icon="teenyicons:address-book-solid"></iconify-icon>
+                                    </span>
+                                    <span class="hide-menu">Managemen Pengguna
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    @endif
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>

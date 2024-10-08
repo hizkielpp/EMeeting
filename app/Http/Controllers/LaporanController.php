@@ -87,7 +87,7 @@ class LaporanController extends Controller
     // }
     public function create_laporan()
     {
-        return view('remake.create_laporan');
+        return view('remake.laporan.create');
     }
     public function delete_file($namafile)
     {
@@ -119,7 +119,7 @@ class LaporanController extends Controller
             $value['simpulan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['simpulan']));
         }
         // Return view with the paginated data
-        return view('remake.riwayat_laporan', compact('laporans', 'search'));
+        return view('remake.laporan.index', compact('laporans', 'search'));
     }
     public function log_laporan_pimpinan(Request $request)
     {
@@ -144,33 +144,17 @@ class LaporanController extends Controller
             $value['simpulan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['simpulan']));
         }
         // Return view with the paginated data
-        return view('remake.riwayat_laporan_pimpinan', compact('laporans', 'search'));
+        return view('remake.laporan.index_pimpinan', compact('laporans', 'search'));
     }
     public function print_laporan(Request $request)
     {
         $laporan = Laporan::find($request->id);
         try {
             // Load the template file
-            if (is_null($laporan->file_pendukung_rapat) && is_null($laporan->tanda_tangan_KSM)) {
+            if (is_null($laporan->tanda_tangan_KSM)) {
                 $templateProcessor = new TemplateProcessor(public_path('templateOutput.docx'));
-            } elseif (is_null($laporan->tanda_tangan_KSM)) {
-                $templateProcessor = new TemplateProcessor(public_path('templateOutputFilePendukung.docx'));
-                $templateProcessor->setImageValue('file_pendukung_rapat', array(
-                    'path' => "bukti/$laporan->file_pendukung_rapat",
-                    'ratio' => true,
-                    'width' => 1000,
-                    'height' => 1000,
-                ));
-            } elseif (is_null($laporan->file_pendukung_rapat)) {
-                $templateProcessor = new TemplateProcessor(public_path('templateOutputKSM.docx'));
             } else {
-                $templateProcessor = new TemplateProcessor(public_path('templateOutputKSMFilePendukung.docx'));
-                $templateProcessor->setImageValue('file_pendukung_rapat', array(
-                    'path' => "bukti/$laporan->file_pendukung_rapat",
-                    'ratio' => true,
-                    'width' => 1000,
-                    'height' => 1000,
-                ));
+                $templateProcessor = new TemplateProcessor(public_path('templateOutputKSM.docx'));
             }
             if (!is_null($laporan->nama_KSM)) {
                 $templateProcessor->setValue('nama_jabatan_KSM', $laporan->nama_jabatan_KSM);
@@ -250,7 +234,7 @@ class LaporanController extends Controller
     public function edit_laporan(Request $request)
     {
         $laporan = Laporan::with('susunans', 'pesertas')->find($request->id);
-        return view('remake.edit_laporan', compact('laporan'));
+        return view('remake.laporan.edit', compact('laporan'));
     }
     public function update_laporan(EditLaporanRequest $request)
     {
@@ -295,22 +279,5 @@ class LaporanController extends Controller
         } catch (\Exception $e) {
             return $e;
         }
-    }
-    public function word_to_pdf()
-    {
-        // Load the DOCX file
-        $docxPath = 'templateOutput.docx';
-        $phpWord = IOFactory::load($docxPath);
-        // Convert to HTML
-        $htmlWriter = IOFactory::createWriter($phpWord, 'HTML');
-        ob_start();
-        $htmlWriter->save('php://output');
-        $htmlContent = ob_get_contents();
-        ob_end_clean();
-        // Convert HTML to PDF
-        $pdf = Pdf::loadHTML($htmlContent);
-
-        // Save and Stream the PDF
-        return $pdf->save('outputAsPDF.pdf')->stream('download.pdf');
     }
 }
