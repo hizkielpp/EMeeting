@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('laporans', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('fk_unit');
+            $table->foreign('fk_unit')->references('id')->on('units');
             $table->unsignedBigInteger('fk_user');
             $table->foreign('fk_user')->references('id')->on('users');
             $table->string('nama_rapat');

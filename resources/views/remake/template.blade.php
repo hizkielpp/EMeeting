@@ -92,7 +92,19 @@
                                     <span>
                                         <iconify-icon icon="teenyicons:address-book-solid"></iconify-icon>
                                     </span>
-                                    <span class="hide-menu">Managemen Pengguna
+                                    <span class="hide-menu">Pengguna
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul id="sidebarnav">
+                            <li class="sidebar-item">
+                                <a class="sidebar-link {{ Request::is('units') ? 'active' : '' }}"
+                                    href="{{ route('units') }}" aria-expanded="false">
+                                    <span>
+                                        <iconify-icon icon="mdi:building"></iconify-icon>
+                                    </span>
+                                    <span class="hide-menu">Unit
                                     </span>
                                 </a>
                             </li>

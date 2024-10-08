@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UnitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,4 +65,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('edit_user', [UserController::class, 'edit'])->name('edit_user');
     // Update of change password
     Route::put('update_user', [UserController::class, 'update'])->name('update_user');
+    // Unit Route
+    Route::get('units',[UnitController::class,'index'])->name('units');
 });

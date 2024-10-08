@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('username');
             $table->string('nickname');
+            $table->unsignedBigInteger('fk_unit');
+            $table->foreign('fk_unit')->references('id')->on('units');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('role');
