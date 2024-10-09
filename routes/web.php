@@ -66,5 +66,5 @@ Route::group(['middleware' => ['auth']], function () {
     // Update of change password
     Route::put('update_user', [UserController::class, 'update'])->name('update_user');
     // Unit Route
-    Route::get('units',[UnitController::class,'index'])->name('units');
+    Route::get('units', [UnitController::class, 'index'])->name('units');
 });

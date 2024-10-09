@@ -9,9 +9,14 @@
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('jquery-ui-1.9.2.custom/css/base/jquery-ui-1.9.2.custom.css') }}">
     @yield('css')
+
     <style>
         .bc {
             color: black !important;
+        }
+
+        .fs-12 {
+            font-size: 12px;
         }
     </style>
 </head>
@@ -38,7 +43,7 @@
                     @if (Auth::user()->role == 'pimpinan')
                         <ul id="sidebarnav">
                             <li class="sidebar-item">
-                                <a class="sidebar-link {{ Request::is('log_laporan_pimpinan') ? 'active' : '' }}"
+                                <a class="sidebar-link {{ Request::is('log_laporan_pimpinan') || Request::is('/') ? 'active' : '' }}"
                                     href="{{ route('monitor') }}" aria-expanded="false">
                                     <span>
                                         <iconify-icon icon="teenyicons:hd-screen-outline"></iconify-icon>
@@ -142,7 +147,7 @@
                                     aria-labelledby="drop2">
                                     <div class="message-body">
                                         <div class="mx-3 mt-2 d-block">
-                                            Halo <br>{{ Auth::user()->nickname }}</div>
+                                            Halo <br>{{ Auth::user()->username }}</div>
 
                                         <a href="{{ route('logout.perform') }}"
                                             class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>

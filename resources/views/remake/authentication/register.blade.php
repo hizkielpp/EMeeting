@@ -7,6 +7,15 @@
     <title>Registrasi Aplikasi EMeeting</title>
     <link rel="shortcut icon" type="image/png" href="{{ asset('logo_undip.png') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
+    <style>
+        .bc {
+            color: black !important;
+        }
+
+        .fs-12 {
+            font-size: 12px;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,22 +37,28 @@
                                     novalidate>
                                     @csrf
                                     <div class="mb-3">
-                                        <label class="form-label">Nama Pengguna</label>
-                                        <input type="text" name="nickname" class="form-control" required>
+                                        <label class="form-label">Nama Pengguna<br><span class="fs-12">nama
+                                                lengkap dengan gelar</span></label>
+                                        <input type="text" name="username" class="form-control bc" required>
                                         <div class="invalid-feedback">
                                             Nama pengguna harus diisi.
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Nama Departemen/Prodi/Unit</label>
-                                        <input type="text" name="username" class="form-control" required>
+                                        <select name="fk_unit" class="form-control bc" id="" required>
+                                            <option value="">--Pilih unit--</option>
+                                            @foreach ($units as $value)
+                                                <option value="{{ $value->id }}">{{ $value->nama_unit }}</option>
+                                            @endforeach
+                                        </select>
                                         <div class="invalid-feedback">
                                             Nama Departemen/Prodi/Unit harus diisi.
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Email</label>
-                                        <input type="email" name="email" class="form-control" required>
+                                        <input type="email" name="email" class="form-control bc" required>
                                         <div class="invalid-feedback">
                                             Email harus diisi.
                                         </div>

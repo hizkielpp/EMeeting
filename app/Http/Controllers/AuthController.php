@@ -8,29 +8,38 @@ use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+
 
 class AuthController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         if (Auth::user()->role == 'pimpinan') {
-            $users = User::where('role', '<>', 'pimpinan')->get();
-            return view('remake.index_pimpinan', compact('users'));
+            // $units = DB::table('units')->paginate(10);
+            // Get the search query from the input
+            $search = $request->input('search');
+            // Fetch units with pagination and search filter'
+            $units = DB::table('units')->when($search, function ($query, $search) {
+                return $query->where('nama_unit', 'like', '%' . $search . '%');
+            });
+            $units = $units->paginate(10);
+            return view('remake.index_pimpinan', compact('units'));
         } else {
             return redirect('create_laporan');
         }
     }
     public function index_register()
     {
-        return view('remake.authentication.register');
+        $units = DB::table('units')->orderBy('nama_unit')->get();
+        return view('remake.authentication.register', compact('units'));
     }
     public function register(RegisterRequest $request)
     {
         try {
-
             $user = new User();
-            $user->nickname = $request->nickname;
+            $user->fk_unit = $request->fk_unit;
             $user->username = $request->username;
             $user->email = $request->email;
             $user->role = 'bawahan';

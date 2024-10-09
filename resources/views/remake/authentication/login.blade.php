@@ -7,6 +7,11 @@
     <title>EMeeting</title>
     <link rel="shortcut icon" type="image/png" href="{{ asset('logo_undip.png') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
+    <style>
+        .bc {
+            color: black !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,12 +33,12 @@
                                     @csrf
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Email</label>
-                                        <input type="email" name="username" class="form-control"
+                                        <input type="email" name="username" class="form-control bc"
                                             id="exampleInputEmail1" aria-describedby="emailHelp">
                                     </div>
                                     <div class="mb-4">
                                         <label for="exampleInputPassword1" class="form-label">Password</label>
-                                        <input type="password" name="password" class="form-control"
+                                        <input type="password" name="password" class="form-control bc"
                                             id="exampleInputPassword1">
                                     </div>
                                     <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4">Sign

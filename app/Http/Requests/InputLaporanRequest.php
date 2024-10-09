@@ -29,12 +29,12 @@ class InputLaporanRequest extends FormRequest
             'jam_rapat' => 'required',
             'tempat' => 'required',
             'pemimpin_rapat' => 'required',
-            'pencatat' => 'required',
+            // 'pencatat' => 'required',
             'nama_jabatan_pejabat' => 'required',
             'tanda_tangan_pejabat' => 'required',
             'nama_pejabat' => 'required',
             'NIP_pejabat' => 'required',
-            'bukti_presensi_kehadiran'=> 'required'
+            'bukti_presensi_kehadiran' => 'required'
         ];
     }
 }

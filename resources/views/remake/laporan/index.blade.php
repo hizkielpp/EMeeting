@@ -83,7 +83,7 @@
                                                         :
                                                     </td>
                                                     <td class="text-start w-50">
-                                                        {{ $item->pencatat }}
+                                                        {{ $item->username }}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -202,25 +202,16 @@
                                             </div>
                                         </div>
                                         <a href="javascript:void(0)" class="toggle-content">Lihat selengkapnya</a>
-                                        {{-- <b>Persoalan yang dibahas</b><br>
-                                        @foreach ($item->persoalan_array as $p)
-                                            {{ $p }}<br>
-                                        @endforeach
-                                        <b>Tanggapan Peserta Rapat</b><br>
-                                        @foreach ($item->tanggapan_array as $p)
-                                            {{ $p }}<br>
-                                        @endforeach
-                                        <b>Simpulan</b><br>
-                                        @foreach ($item->simpulan_array as $p)
-                                            {{ $p }}<br>
-                                        @endforeach --}}
                                     </td>
                                     <td class="align-top">
                                         <div class="d-flex flex-column gap-3">
-                                            <a href="{{ route('edit_laporan') . '?id=' . $item->id }}" target="_blank">
-                                                <iconify-icon class="text-black fs-6 pointer w-100" data-toggle="tooltip"
-                                                    data-placement="top" title="Edit" icon="teenyicons:edit-1-solid"
-                                                    style="cursor: pointer"></iconify-icon>
+                                            @if ($item->fk_user == Auth::id())
+                                                <a href="{{ route('edit_laporan') . '?id=' . $item->id }}" target="_blank">
+                                                    <iconify-icon class="text-black fs-6 pointer w-100"
+                                                        data-toggle="tooltip" data-placement="top" title="Edit"
+                                                        icon="teenyicons:edit-1-solid"
+                                                        style="cursor: pointer"></iconify-icon>
+                                            @endif
                                             </a>
                                             <a href="{{ route('print_notula') . '?id=' . $item->id }}">
                                                 <iconify-icon class="text-black fs-6 pointer w-100" data-toggle="tooltip"

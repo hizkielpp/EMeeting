@@ -84,13 +84,13 @@
                         Pemimpin rapat harus diisi.
                     </div>
                 </div>
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <label class="form-label">Pencatat/Notulis<span class="text-danger">*</span></label>
                     <input type="text" name="pencatat" class="form-control bc" required value="">
                     <div class="invalid-feedback">
                         Pencatat/Notulis harus diisi.
                     </div>
-                </div>
+                </div> --}}
                 <div class="mb-3 fs__child form-label">
                     Peserta rapat<span class="text-danger">*</span>
                     <div id="pr" class="mb-3">

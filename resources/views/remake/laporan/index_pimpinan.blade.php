@@ -11,7 +11,7 @@
                 <div class="input-group">
                     <input type="text" name="search" class="form-control" placeholder="Cari laporan..."
                         value="{{ request('search') }}">
-                    <input type="hidden" name="id_user" class="form-control" value="{{ request('id_user') }}">
+                    <input type="hidden" name="id_unit" class="form-control" value="{{ request('id_unit') }}">
                     <button class="btn btn-primary" type="submit">Search</button>
                 </div>
             </form>
@@ -84,7 +84,7 @@
                                                         :
                                                     </td>
                                                     <td class="text-start w-50">
-                                                        {{ $item->pencatat }}
+                                                        {{ $item->username }}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -237,7 +237,7 @@
 
                 <!-- Pagination Links -->
                 <div class="d-flex justify-content-center mt-4">
-                    {{ $laporans->appends(['search' => request('search'), 'id_user' => request('id_user')])->links('pagination::bootstrap-5') }}
+                    {{ $laporans->appends(['search' => request('search'), 'id_unit' => request('id_unit')])->links('pagination::bootstrap-5') }}
                 </div>
             </div>
         </div>

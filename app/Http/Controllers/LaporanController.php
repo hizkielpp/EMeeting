@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\TemplateProcessor;
 
@@ -42,6 +43,7 @@ class LaporanController extends Controller
             unset($data['mahasiswa'], $data['dosen'], $data['tendik'], $data['sarpras'], $data['lain_lain']);
             $laporan = new Laporan($data);
             $laporan->fk_user = Auth::id();
+            $laporan->fk_unit = Auth::user()->fk_unit;
             $laporan->save();
             foreach ($data['peserta_rapat'] as $val) {
                 $peserta = new Peserta();
@@ -60,31 +62,6 @@ class LaporanController extends Controller
             return $e;
         }
     }
-    // public function edit_laporan(EditLaporanRequest $request)
-    // {
-    //     $data = $request->validationData();
-    //     if (isset($data['bukti_presensi'])) {
-    //         $fileName = auth()->id() . '_' . time() . '.' . $request->bukti_presensi->extension();
-    //         $type = $request->bukti_presensi->getClientMimeType();
-    //         $size = $request->bukti_presensi->getSize();
-    //         $request->bukti_presensi->move('bukti', $fileName);
-    //         $data['bukti_presensi'] = $fileName;
-    //     }
-    //     if (isset($data['tanda_tangan_kadep'])) {
-    //         $fileName = auth()->id() . '_' . time() . '.' . $request->tanda_tangan_kadep->extension();
-    //         $type = $request->tanda_tangan_kadep->getClientMimeType();
-    //         $size = $request->tanda_tangan_kadep->getSize();
-    //         $request->tanda_tangan_kadep->move('bukti', $fileName);
-    //         $data['tanda_tangan_kadep'] = $fileName;
-    //     }
-    //     if (isset($data['tanda_tangan_kaprodi'])) {
-    //         $fileName = auth()->id() . '_' . time() . '.' . $request->tanda_tangan_kaprodi->extension();
-    //         $type = $request->tanda_tangan_kaprodi->getClientMimeType();
-    //         $size = $request->tanda_tangan_kaprodi->getSize();
-    //         $request->tanda_tangan_kaprodi->move('bukti', $fileName);
-    //         $data['tanda_tangan_kaprodi'] = $fileName;
-    //     }
-    // }
     public function create_laporan()
     {
         return view('remake.laporan.create');
@@ -102,15 +79,17 @@ class LaporanController extends Controller
         // Get the search query from the input
         $search = $request->input('search');
         // Fetch reports with pagination and search filter'
-        $laporans = Laporan::when($search, function ($query, $search) {
+        $unit = DB::table('units')->where('units.id', '=', Auth::user()->fk_unit)->first();
+        $laporans = Laporan::leftJoin('users', 'users.id', '=', 'laporans.fk_user')->when($search, function ($query, $search) {
             return $query->where(function ($query) use ($search) {
                 $query->where('nama_rapat', 'like', '%' . $search . '%')
                     ->orWhere('tempat', 'like', '%' . $search . '%')
-                    ->orWhere('pencatat', 'like', '%' . $search . '%')
+                    ->orWhere('users.username', 'like', '%' . $search . '%')
                     ->orWhere('pemimpin_rapat', 'like', '%' . $search . '%');
             });
         })
-            ->where('fk_user', '=', Auth::id())
+            ->select('users.username', 'laporans.*')
+            ->where('laporans.fk_unit', '=', Auth::user()->fk_unit)
             ->orderBy('tanggal_rapat', 'desc')
             ->paginate(5);
         foreach ($laporans as $value) {
@@ -126,16 +105,17 @@ class LaporanController extends Controller
         // Get the search query from the input
         $search = $request->input('search');
         // Fetch reports with pagination and search filter'
-        $laporans = Laporan::when($search, function ($query, $search) {
+        $laporans = Laporan::leftJoin('users', 'users.id', '=', 'laporans.fk_user')->when($search, function ($query, $search) {
             return $query
                 ->where(function ($query) use ($search) {
                     $query->where('nama_rapat', 'like', '%' . $search . '%')
                         ->orWhere('tempat', 'like', '%' . $search . '%')
-                        ->orWhere('pencatat', 'like', '%' . $search . '%')
+                        ->orWhere('users.username', 'like', '%' . $search . '%')
                         ->orWhere('pemimpin_rapat', 'like', '%' . $search . '%');
                 });
         })
-            ->where('fk_user', '=', $request->id_user)
+            ->where('laporans.fk_unit', '=', $request->id_unit)
+            ->select('users.username', 'laporans.*')
             ->orderBy('tanggal_rapat', 'desc')
             ->paginate(5);
         foreach ($laporans as $value) {

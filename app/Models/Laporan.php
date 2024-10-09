@@ -19,7 +19,7 @@ class Laporan extends Model
         'tanggal_rapat',
         'tempat',
         'pemimpin_rapat',
-        'pencatat',
+        // 'pencatat',
         'bukti_presensi_kehadiran',
         'file_pendukung_rapat',
         'nama_jabatan_pejabat',

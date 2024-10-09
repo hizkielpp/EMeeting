@@ -23,7 +23,7 @@ return new class extends Migration
             $table->datetime('tanggal_rapat');
             $table->string('tempat');
             $table->string('pemimpin_rapat');
-            $table->string('pencatat');
+            // $table->string('pencatat');
             $table->string('nama_jabatan_pejabat');
             $table->text('tanda_tangan_pejabat');
             $table->text('nama_pejabat');

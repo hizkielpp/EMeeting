@@ -31,7 +31,7 @@ class EditLaporanRequest extends FormRequest
             'tempat' => 'required',
             'susunan_acara' => 'required',
             'pemimpin_rapat' => 'required',
-            'pencatat' => 'required',
+            // 'pencatat' => 'required',
             'peserta_rapat' => 'required',
             'nama_jabatan_pejabat' => 'required',
             'tanda_tangan_pejabat' => 'required',

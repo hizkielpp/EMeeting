@@ -38,7 +38,7 @@
                                                         :
                                                     </td>
                                                     <td class="text-start w-50">
-                                                        {{ $item->nickname }}
+                                                        {{ $item->username }}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -49,7 +49,7 @@
                                                         :
                                                     </td>
                                                     <td class="text-start w-50">
-                                                        {{ $item->username }}
+                                                        {{ $item->nama_unit }}
                                                     </td>
                                                 </tr>
                                                 <tr>

@@ -1,35 +1,5 @@
 @extends('remake.template')
 @section('css')
-    <style>
-        :root {
-            --primary-color: #000;
-        }
-
-        .signature-pad-form {
-            touch-action: none;
-            background-color: white;
-        }
-
-        .signature-pad {
-            /* cursor: pointer; */
-            border: 2px solid var(--primary-color);
-            border-radius: 4px;
-        }
-
-        .clear-button {
-            color: var(--primary-color);
-        }
-
-        .submit-button {
-            width: 100%;
-            background-color: var(--primary-color);
-            border: none;
-            padding: 0.5rem 1rem;
-            color: #fff;
-            cursor: pointer;
-            margin-top: 2rem;
-        }
-    </style>
 @endsection
 @section('content')
     <div class="card">
@@ -44,28 +14,34 @@
                 @if (Auth::user()->role == 'admin')
                     <div class="mb-3">
                         <label class="form-label">Nama Pengguna<span class="text-danger">*</span></label>
-                        <input type="text" name="nickname" class="form-control" value="{{ $user->nickname }}">
+                        <input type="text" name="username" class="form-control bc" value="{{ $user->username }}">
                         <div class="invalid-feedback">
                             Nama pengguna harus diisi.
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Nama Unit<span class="text-danger">*</span></label>
-                        <input type="text" name="username" class="form-control" value="{{ $user->username }}">
+                        <select name="fk_unit" class="form-control bc" id="" required>
+                            <option value="">--Pilih Unit--</option>
+                            @foreach ($units as $item)
+                                <option value="{{ $item->id }}" {{ $item->id == $user->fk_unit ? 'selected' : '' }}>
+                                    {{ $item->nama_unit }}</option>
+                            @endforeach
+                        </select>
                         <div class="invalid-feedback">
                             Unit harus diisi.
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email Pengguna<span class="text-danger">*</span></label>
-                        <input type="email" name="email" class="form-control" value="{{ $user->email }}">
+                        <input type="email" name="email" class="form-control bc" value="{{ $user->email }}">
                         <div class="invalid-feedback">
                             Nama pengguna harus diisi.
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Role<span class="text-danger">*</span></label>
-                        <select name="role" id="" class="form-control">
+                        <select name="role" id="" class="form-control bc">
                             <option value="pimpinan" {{ $user->role == 'pimpinan' ? 'selected' : '' }}>Pimpinan</option>
                             <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
                             <option value="bawahan" {{ $user->role == 'bawahan' ? 'selected' : '' }}>Bawahan</option>
@@ -77,7 +53,7 @@
                 @endif
                 <div class="mb-3">
                     <label class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control">
+                    <input type="password" name="password" class="form-control bc">
                     <div class="invalid-feedback">
                         Password harus diisi.
                     </div>

@@ -78,9 +78,10 @@ class DatabaseSeeder extends Seeder
         DB::table('units')->insert(['nama_unit' => 'Dekan']);
         DB::table('units')->insert(['nama_unit' => 'Wakil Dekan Sumberdaya']);
         DB::table('units')->insert(['nama_unit' => 'Wakil Dekan Akademik dan Kemahasiwaan']);
-        (new User(['username' => 'Dekan', 'fk_unit' => 60,'nickname' => 'Yan Wisnu Prajoko', 'role' => 'pimpinan', 'email' => 'dekan@gmail.com', 'password' => 'password']))->save();
-        (new User(['username' => 'S1 Kedokteran', 'fk_unit' => 34, 'nickname' => 'Hizkiel Putra Pakubumi', 'role' => 'bawahan', 'email' => 's1dokter@gmail.com', 'password' => 'password']))->save();
-        (new User(['username' => 'IT', 'nickname' => 'Ardi', 'fk_unit' => 53, 'role' => 'admin', 'email' => 'it@gmail.com', 'password' => 'password']))->save();
+        (new User(['username' => 'Yan Wisnu Prajoko', 'fk_unit' => 60,  'role' => 'pimpinan', 'email' => 'dekan@gmail.com', 'password' => 'password']))->save();
+        (new User(['username' => 'Hizkiel Putra Pakubumi', 'fk_unit' => 34,  'role' => 'bawahan', 'email' => 'hizkiel@gmail.com', 'password' => 'password']))->save();
+        (new User(['username' => 'Pradipta Ary', 'fk_unit' => 34,  'role' => 'bawahan', 'email' => 'ipung@gmail.com', 'password' => 'password']))->save();
+        (new User(['username' => 'Damianus Ardi', 'fk_unit' => 53, 'role' => 'admin', 'email' => 'ardi@gmail.com', 'password' => 'password']))->save();
         User::all();
         foreach (User::all() as $value) {
             for ($a = 1; $a <= 20; $a++) {
@@ -90,7 +91,7 @@ class DatabaseSeeder extends Seeder
                     'nama_rapat' => 'Rapat ke-' . $a,
                     'tempat' => 'RSG',
                     'pemimpin_rapat' => 'Pak Musa',
-                    'pencatat' => 'Pak Wawan',
+                    // 'pencatat' => 'Pak Wawan',
                     'tanggal_rapat' => '2024-03-' . $a . ' 10:00:00',
                     'bukti_presensi_kehadiran' => '2_48687_2.jpg',
                     'persoalan_yang_dibahas' =>
