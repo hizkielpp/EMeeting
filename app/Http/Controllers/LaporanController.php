@@ -132,9 +132,9 @@ class LaporanController extends Controller
         try {
             // Load the template file
             if (is_null($laporan->tanda_tangan_KSM)) {
-                $templateProcessor = new TemplateProcessor(public_path('templateOutput.docx'));
+                $templateProcessor = new TemplateProcessor('templateOutput.docx');
             } else {
-                $templateProcessor = new TemplateProcessor(public_path('templateOutputKSM.docx'));
+                $templateProcessor = new TemplateProcessor('templateOutputKSM.docx');
             }
             if (!is_null($laporan->nama_KSM)) {
                 $templateProcessor->setValue('nama_jabatan_KSM', $laporan->nama_jabatan_KSM);
