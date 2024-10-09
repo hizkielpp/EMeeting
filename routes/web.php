@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UnitController;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,3 +77,6 @@ Route::group(['middleware' => ['auth']], function () {
     // Put method to update a unit
     Route::put('update_unit', [UnitController::class, 'update'])->name('update_unit');
 });
+
+// force to https
+// URL::forceScheme('https');
