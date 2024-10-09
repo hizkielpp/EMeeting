@@ -67,4 +67,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('update_user', [UserController::class, 'update'])->name('update_user');
     // Unit Route
     Route::get('units', [UnitController::class, 'index'])->name('units');
+    // Get view to create unit
+    Route::get('create_unit', [UnitController::class, 'create'])->name('create_unit');
+    // Post method to create new unit
+    Route::post('input_unit', [UnitController::class, 'input'])->name('input_unit');
+    // Get view to edit unit
+    Route::get('edit_unit', [UnitController::class, 'edit'])->name('edit_unit');
+    // Put method to update a unit
+    Route::put('update_unit', [UnitController::class, 'update'])->name('update_unit');
 });

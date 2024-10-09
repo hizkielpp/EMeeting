@@ -7,13 +7,16 @@
             <h5 class="card-title">Nama-nama Unit</h5>
 
             <!-- Search Form -->
-            <form action="{{ route('users') }}" method="GET" class="mb-4">
+            <form action="{{ route('units') }}" method="GET" class="mb-4">
                 <div class="input-group">
-                    <input type="text" name="search" class="form-control" placeholder="Cari pengguna..."
+                    <input type="text" name="search" class="form-control" placeholder="Cari unit..."
                         value="{{ request('search') }}">
                     <button class="btn btn-primary" type="submit">Search</button>
                 </div>
             </form>
+            <a href="{{ route('create_unit') }}" target="_blank"><button class="btn btn-primary" type="submit">Tambah Unit
+                    Baru</button></a>
+
 
             <div class="table-responsive">
                 <table class="table text-nowrap align-middle mb-0">
@@ -36,7 +39,7 @@
                                     </th>
                                     <td class="align-top">
                                         <div class="d-flex flex-column gap-3 align-items-end">
-                                            <a href="{{ route('edit_user') . '?id=' . $item->id }}" target="_blank">
+                                            <a href="{{ route('edit_unit') . '?id_unit=' . $item->id }}" target="_blank">
                                                 <iconify-icon class="text-black fs-6 pointer w-100" data-toggle="tooltip"
                                                     data-placement="top" title="Edit" icon="teenyicons:edit-1-solid"
                                                     style="cursor: pointer"></iconify-icon>
