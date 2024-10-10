@@ -92,7 +92,7 @@
                     @if (Auth::user()->role == 'admin')
                         <ul id="sidebarnav">
                             <li class="sidebar-item">
-                                <a class="sidebar-link {{ Request::is('users') || Request::is('edit_user') ? 'active' : '' }}"
+                                <a class="sidebar-link {{ Request::is('users') || Request::is('edit_user') || Request::is('delete_user') ? 'active' : '' }}"
                                     href="{{ route('users') }}" aria-expanded="false">
                                     <span>
                                         <iconify-icon icon="teenyicons:address-book-solid"></iconify-icon>
@@ -145,7 +145,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
                                     aria-labelledby="drop2">
-                                    <div class="message-body">
+                                    <div class="message-body bc">
                                         <div class="mx-3 mt-2 d-block">
                                             Halo <br>{{ Auth::user()->username }}</div>
 

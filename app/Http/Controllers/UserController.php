@@ -54,4 +54,18 @@ class UserController extends Controller
             return $e;
         }
     }
+    public function delete(Request $request)
+    {
+        $user = User::leftJoin('units', 'units.id', '=', 'users.fk_unit')->select('units.nama_unit', 'users.*')->find($request->id);
+        return view('remake.user.delete', compact('user'));
+    }
+    public function destroy(Request $request)
+    {
+        try {
+            User::find($request->id)->delete();
+            return redirect('users')->with('success', 'Berhasil menghapus user');
+        } catch (\Exception $e) {
+            return redirect('users')->with('error', 'Gagal menghapus user');
+        }
+    }
 }

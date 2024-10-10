@@ -82,5 +82,16 @@ class DatabaseSeeder extends Seeder
         (new User(['username' => 'Hizkiel Putra Pakubumi', 'fk_unit' => 34,  'role' => 'bawahan', 'email' => 'hizkiel@gmail.com', 'password' => 'password']))->save();
         (new User(['username' => 'Pradipta Ary', 'fk_unit' => 34,  'role' => 'bawahan', 'email' => 'ipung@gmail.com', 'password' => 'password']))->save();
         (new User(['username' => 'Damianus Ardi', 'fk_unit' => 53, 'role' => 'admin', 'email' => 'ardi@gmail.com', 'password' => 'password']))->save();
+        // (new Laporan([
+        //     'fk_unit' => 34,
+        //     'fk_user' => 2,
+        //     'nama_rapat' => 'Rapat X',
+        //     'tanggal_rapat' => now(),
+        //     'tempat' => 'RSG',
+        //     'pemimpin_rapat' => 'Bu Agnes',
+        //     'nama_jabatan_pejabat' => 'Manager',
+        //     'tanda_tangan_pejabat' => 'signature.jpg',
+        //     'NIP_pejabat' => 123456789,
+        // ]))->save();
     }
 }

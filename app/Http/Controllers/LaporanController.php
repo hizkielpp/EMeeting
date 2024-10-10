@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Laporan;
 use App\Models\Peserta;
 use App\Models\Susunan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
-use PhpOffice\PhpWord\IOFactory;
-use PhpOffice\PhpWord\TemplateProcessor;
+// use PhpOffice\PhpWord\IOFactory;
+// use PhpOffice\PhpWord\TemplateProcessor;
 
 class LaporanController extends Controller
 {
@@ -85,6 +85,7 @@ class LaporanController extends Controller
                 $query->where('nama_rapat', 'like', '%' . $search . '%')
                     ->orWhere('tempat', 'like', '%' . $search . '%')
                     ->orWhere('users.username', 'like', '%' . $search . '%')
+                    ->orWhere('tanggal_rapat', 'like', '%' . $search . '%')
                     ->orWhere('pemimpin_rapat', 'like', '%' . $search . '%');
             });
         })
@@ -126,91 +127,92 @@ class LaporanController extends Controller
         // Return view with the paginated data
         return view('remake.laporan.index_pimpinan', compact('laporans', 'search'));
     }
-    public function print_laporan(Request $request)
-    {
-        $laporan = Laporan::find($request->id);
-        try {
-            // Load the template file
-            if (is_null($laporan->tanda_tangan_KSM)) {
-                $templateProcessor = new TemplateProcessor('templateOutput.docx');
-            } else {
-                $templateProcessor = new TemplateProcessor('templateOutputKSM.docx');
-            }
-            if (!is_null($laporan->nama_KSM)) {
-                $templateProcessor->setValue('nama_jabatan_KSM', $laporan->nama_jabatan_KSM);
-                $templateProcessor->setValue('nama_KSM', $laporan->nama_KSM);
-                $templateProcessor->setImageValue('tanda_tangan_KSM', array(
-                    'path' => $laporan->tanda_tangan_KSM,
-                    'width' => 120,
-                    'height' => 120,
-                    'ratio' => false
-                ));
-                $templateProcessor->setValue('NIP_KSM', $laporan->NIP_KSM);
-            }
-            $date = Carbon::parse($laporan->tanggal_rapat)->locale('id');
-            $date->settings(['formatFunction' => 'translatedFormat']);
-            // Set values for the placeholders in the template
-            $templateProcessor->setValue('nama_rapat', $laporan->nama_rapat);
-            $templateProcessor->setValue('hari', $date->format('l'));
-            $templateProcessor->setValue('tanggal', $date->format('j F Y'));
-            $templateProcessor->setValue('pukul', $date->format('h:i'));
-            $templateProcessor->setValue('tempat', $laporan->tempat);
+    // Print laporan using TemplateProcessor
+    // public function print_laporan(Request $request)
+    // {
+    //     $laporan = Laporan::find($request->id);
+    //     try {
+    //         // Load the template file
+    //         if (is_null($laporan->tanda_tangan_KSM)) {
+    //             $templateProcessor = new TemplateProcessor('templateOutput.docx');
+    //         } else {
+    //             $templateProcessor = new TemplateProcessor('templateOutputKSM.docx');
+    //         }
+    //         if (!is_null($laporan->nama_KSM)) {
+    //             $templateProcessor->setValue('nama_jabatan_KSM', $laporan->nama_jabatan_KSM);
+    //             $templateProcessor->setValue('nama_KSM', $laporan->nama_KSM);
+    //             $templateProcessor->setImageValue('tanda_tangan_KSM', array(
+    //                 'path' => $laporan->tanda_tangan_KSM,
+    //                 'width' => 120,
+    //                 'height' => 120,
+    //                 'ratio' => false
+    //             ));
+    //             $templateProcessor->setValue('NIP_KSM', $laporan->NIP_KSM);
+    //         }
+    //         $date = Carbon::parse($laporan->tanggal_rapat)->locale('id');
+    //         $date->settings(['formatFunction' => 'translatedFormat']);
+    //         // Set values for the placeholders in the template
+    //         $templateProcessor->setValue('nama_rapat', $laporan->nama_rapat);
+    //         $templateProcessor->setValue('hari', $date->format('l'));
+    //         $templateProcessor->setValue('tanggal', $date->format('j F Y'));
+    //         $templateProcessor->setValue('pukul', $date->format('h:i'));
+    //         $templateProcessor->setValue('tempat', $laporan->tempat);
 
-            // Handle susunan acara (agenda items)
-            $susunan_acara = array_map(function ($su) {
-                return $su['nama_susunan'];
-            }, $laporan->susunans->toArray());
-            $templateProcessor->cloneRow('susunan_acara', count($susunan_acara));
-            $no_susunan = 1;
-            foreach ($susunan_acara as $val) {
-                $templateProcessor->setValue('susunan_acara#' . $no_susunan, $val);
-                $templateProcessor->setValue('no_su#' . $no_susunan, $no_susunan);
-                $no_susunan++;
-            }
+    //         // Handle susunan acara (agenda items)
+    //         $susunan_acara = array_map(function ($su) {
+    //             return $su['nama_susunan'];
+    //         }, $laporan->susunans->toArray());
+    //         $templateProcessor->cloneRow('susunan_acara', count($susunan_acara));
+    //         $no_susunan = 1;
+    //         foreach ($susunan_acara as $val) {
+    //             $templateProcessor->setValue('susunan_acara#' . $no_susunan, $val);
+    //             $templateProcessor->setValue('no_su#' . $no_susunan, $no_susunan);
+    //             $no_susunan++;
+    //         }
 
-            // Set additional placeholders
-            $templateProcessor->setValue('pemimpin_rapat', $laporan->pemimpin_rapat);
-            $templateProcessor->setValue('pencatat', $laporan->pencatat);
+    //         // Set additional placeholders
+    //         $templateProcessor->setValue('pemimpin_rapat', $laporan->pemimpin_rapat);
+    //         $templateProcessor->setValue('pencatat', $laporan->pencatat);
 
-            // Handle peserta rapat (meeting participants)
-            $peserta_rapat = array_map(function ($pr) {
-                return $pr['nama_peserta'];
-            }, $laporan->pesertas->toArray());
-            $templateProcessor->cloneRow('nama_peserta', count($peserta_rapat));
-            $no_peserta = 1;
-            foreach ($peserta_rapat as $i => $val) {
-                $templateProcessor->setValue('nama_peserta#' . $no_peserta, $val);
-                $templateProcessor->setValue('no_np#' . $no_peserta, $no_peserta);
-                $no_peserta++;
-            }
+    //         // Handle peserta rapat (meeting participants)
+    //         $peserta_rapat = array_map(function ($pr) {
+    //             return $pr['nama_peserta'];
+    //         }, $laporan->pesertas->toArray());
+    //         $templateProcessor->cloneRow('nama_peserta', count($peserta_rapat));
+    //         $no_peserta = 1;
+    //         foreach ($peserta_rapat as $i => $val) {
+    //             $templateProcessor->setValue('nama_peserta#' . $no_peserta, $val);
+    //             $templateProcessor->setValue('no_np#' . $no_peserta, $no_peserta);
+    //             $no_peserta++;
+    //         }
 
-            // Set more placeholders
-            $templateProcessor->setValue('persoalan_dibahas', $laporan->persoalan_yang_dibahas);
-            $templateProcessor->setValue('tanggapan_peserta_rapat', $laporan->tanggapan_peserta_rapat);
-            $templateProcessor->setValue('simpulan', $laporan->simpulan);
-            $templateProcessor->setValue('nama_jabatan', $laporan->nama_jabatan_pejabat);
-            $templateProcessor->setValue('nama_pejabat', $laporan->nama_pejabat);
-            $templateProcessor->setImageValue('tanda_tangan', array(
-                'path' => $laporan->tanda_tangan_pejabat,
-                'width' => 120,
-                'height' => 120,
-                'ratio' => false
-            ));
-            $templateProcessor->setValue('NIP', $laporan->NIP_pejabat);
-            $templateProcessor->setImageValue('lampiran', array(
-                'path' => "bukti/$laporan->bukti_presensi_kehadiran",
-                'ratio' => true,
-                'width' => 1000,
-                'height' => 1000,
-            ));
-            header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document'); //mime type
-            header('Cache-Control: max-age=0'); //no cache
-            header('Content-Disposition: attachment;filename="output_rapat.docx"'); //tell browser what's the file name
-            $templateProcessor->saveAs('php://output');
-        } catch (\Exception $e) {
-            return $e;
-        }
-    }
+    //         // Set more placeholders
+    //         $templateProcessor->setValue('persoalan_dibahas', $laporan->persoalan_yang_dibahas);
+    //         $templateProcessor->setValue('tanggapan_peserta_rapat', $laporan->tanggapan_peserta_rapat);
+    //         $templateProcessor->setValue('simpulan', $laporan->simpulan);
+    //         $templateProcessor->setValue('nama_jabatan', $laporan->nama_jabatan_pejabat);
+    //         $templateProcessor->setValue('nama_pejabat', $laporan->nama_pejabat);
+    //         $templateProcessor->setImageValue('tanda_tangan', array(
+    //             'path' => $laporan->tanda_tangan_pejabat,
+    //             'width' => 120,
+    //             'height' => 120,
+    //             'ratio' => false
+    //         ));
+    //         $templateProcessor->setValue('NIP', $laporan->NIP_pejabat);
+    //         $templateProcessor->setImageValue('lampiran', array(
+    //             'path' => "bukti/$laporan->bukti_presensi_kehadiran",
+    //             'ratio' => true,
+    //             'width' => 1000,
+    //             'height' => 1000,
+    //         ));
+    //         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document'); //mime type
+    //         header('Cache-Control: max-age=0'); //no cache
+    //         header('Content-Disposition: attachment;filename="output_rapat.docx"'); //tell browser what's the file name
+    //         $templateProcessor->saveAs('php://output');
+    //     } catch (\Exception $e) {
+    //         return $e;
+    //     }
+    // }
     public function edit_laporan(Request $request)
     {
         $laporan = Laporan::with('susunans', 'pesertas')->find($request->id);
@@ -256,6 +258,19 @@ class LaporanController extends Controller
             unset($data['jam_rapat']);
             $laporan->update($data);
             return redirect()->back()->with('success', 'Berhasil mengubah laporan');
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
+    public function print_laporan(Request $request)
+    {
+        try {
+            $data = [
+                'title' => 'Welcome to ItSolutionStuff.com',
+                'date' => date('m/d/Y'),
+            ];
+            $pdf = PDF::loadView('remake.laporan.notula', $data);
+            return $pdf->download('notula.pdf');
         } catch (\Exception $e) {
             return $e;
         }

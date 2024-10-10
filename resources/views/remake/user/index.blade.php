@@ -83,7 +83,12 @@
                                                 <iconify-icon class="text-black fs-6 pointer w-100" data-toggle="tooltip"
                                                     data-placement="top" title="Edit" icon="teenyicons:edit-1-solid"
                                                     style="cursor: pointer"></iconify-icon>
-                                            </a>
+                                                <a href="{{ route('delete_user') . '?id=' . $item->id }}" target="_blank">
+                                                    <iconify-icon class="text-black fs-6 pointer w-100"
+                                                        data-toggle="tooltip" data-placement="top" title="Delete"
+                                                        icon="material-symbols:delete"
+                                                        style="cursor: pointer"></iconify-icon>
+                                                </a>
                                         </div>
                                     </td>
                                 </tr>
