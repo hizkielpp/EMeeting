@@ -264,15 +264,17 @@ class LaporanController extends Controller
     }
     public function print_laporan(Request $request)
     {
-        try {
-            $data = [
-                'title' => 'Welcome to ItSolutionStuff.com',
-                'date' => date('m/d/Y'),
-            ];
-            $pdf = PDF::loadView('remake.laporan.notula', $data);
-            return $pdf->download('notula.pdf');
-        } catch (\Exception $e) {
-            return $e;
-        }
+        // try {
+        //     $data = [
+        //         'title' => 'Welcome to ItSolutionStuff.com',
+        //         'date' => date('m/d/Y'),
+        //     ];
+        //     $pdf = PDF::loadView('remake.laporan.notula', $data);
+        //     return $pdf->download('notula.pdf');
+        // } catch (\Exception $e) {
+        //     return $e;
+        // }
+        $pdf = Pdf::loadView('remake.laporan.notula');
+        return $pdf->download();
     }
 }
