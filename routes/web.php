@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\NamaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Artisan;
@@ -80,6 +81,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('edit_unit', [UnitController::class, 'edit'])->name('edit_unit');
     // Put method to update a unit
     Route::put('update_unit', [UnitController::class, 'update'])->name('update_unit');
+
+    // Get nama
+    Route::get('get_namas', [NamaController::class, 'get_namas'])->name('get_namas');
 });
 // Route to print notula of the laporan
 Route::get('print_notula', [LaporanController::class, 'print_laporan'])->name('print_notula');

@@ -42,16 +42,27 @@
                 @csrf
                 <div class="mb-3">
                     <label class="form-label">Password<span class="text-danger">*</span></label>
-                    <input type="password" name="password" class="form-control" required>
-                    <div class="invalid-feedback">
-                        Password harus diisi.
+                    <div class="input-group mb-3">
+                        <input id="password" type="password" name="password" class="form-control bc" required>
+                        <iconify-icon class="input-group-text"
+                            onclick="if($('#password').attr('type')=='password'){$('#password').attr('type','text');this.icon='mdi:eye'}else{$('#password').attr('type','password');this.icon='mdi:eye-off'}"
+                            style="cursor: pointer" icon="mdi:eye-off"></iconify-icon>
+                        <div class="invalid-feedback">
+                            Password harus diisi.
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Konfirmasi Password<span class="text-danger">*</span></label>
-                    <input type="password" name="password_konfirmasi" class="form-control" required>
-                    <div class="invalid-feedback">
-                        Password konfirmasi harus diisi.
+                    <div class="input-group mb-3">
+                        <input id="password_konfirmasi" type="password" name="password_konfirmasi" class="form-control bc"
+                            required>
+                        <iconify-icon class="input-group-text"
+                            onclick="if($('#password_konfirmasi').attr('type')=='password'){$('#password_konfirmasi').attr('type','text');this.icon='mdi:eye'}else{$('#password_konfirmasi').attr('type','password');this.icon='mdi:eye-off'}"
+                            style="cursor: pointer" icon="mdi:eye-off"></iconify-icon>
+                        <div class="invalid-feedback">
+                            Password konfirmasi harus diisi.
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="mt-3 btn btn-primary">Submit</button>

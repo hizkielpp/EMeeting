@@ -18,6 +18,14 @@
         .fs-12 {
             font-size: 12px;
         }
+
+        input {
+            border-color: #252525;
+        }
+
+        .form-control {
+            border-color: #252525;
+        }
     </style>
 </head>
 

@@ -38,8 +38,8 @@ class LaporanController extends Controller
                 $data['file_pendukung_rapat'] = $filename_file_pendukung_rapat;
             }
             $data['tanggal_rapat'] = $data['tanggal_rapat'] . ' ' . $data['jam_rapat'] . ':00';
-            $data['tanggal_rapat'] = date_format(date_create($data['tanggal_rapat']), 'Y-m-d H:i:s');
-            $data['persoalan_yang_dibahas'] = $data['mahasiswa'] . $data['dosen'] . $data['tendik'] . $data['sarpras'] . $data['lain_lain'];
+            $data['tanggal_rapat'] = Carbon::createFromFormat('d-m-Y H:i:s', $data['tanggal_rapat'])->format('Y-m-d H:i:s');
+            return $data;
             unset($data['mahasiswa'], $data['dosen'], $data['tendik'], $data['sarpras'], $data['lain_lain']);
             $laporan = new Laporan($data);
             $laporan->fk_user = Auth::id();

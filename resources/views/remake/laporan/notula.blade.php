@@ -95,7 +95,10 @@
                     <span class="fs-11">KEMENTRIAN PENDIDIKAN, KEBUDAYAAN,<br>RISET, DAN
                         TEKNOLOGI</span><br>
                     <span class="fs-16">UNIVERSITAS DIPONEOGORO</span><br>
-                    <span class="fs-14">FAKULTAS KEDOKTERAN</span>
+                    @if (isset($unit))
+                    @else
+                        <span class="fs-14">FAKULTAS KEDOKTERAN</span>
+                    @endif
                 </td>
                 <td class="w-half arial fs-7 text-right" style="padding: 20px">
                     Jalan Prof. Mr. Sunario<br>

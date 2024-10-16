@@ -29,6 +29,15 @@
             cursor: pointer;
             margin-top: 2rem;
         }
+
+        .suggestion-item {
+            padding: 5px;
+        }
+
+        .suggestion-item:hover {
+            border-radius: .5rem !important;
+            border: 2px solid var(--primary-color);
+        }
     </style>
 @endsection
 @section('content')
@@ -47,7 +56,7 @@
                     </div>
                 </div>
                 <div class="mb-3 fs__child form-label">
-                    Tanggal Rapat<span class="text-danger">*</span><input name="tanggal_rapat" value="{{ date('m/d/Y') }}"
+                    Tanggal Rapat<span class="text-danger">*</span><input name="tanggal_rapat" value="{{ date('m-d-Y') }}"
                         type="text" class="fs__normal form-control bc" id="tanggal_rapat" required>
                     <div class="invalid-feedback">
                         Tanggal rapat harus diisi.
@@ -79,18 +88,16 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Pemimpin rapat<span class="text-danger">*</span></label>
-                    <input type="text" name="pemimpin_rapat" class="form-control bc" required value="">
+                    <input type="text" name="pemimpin_rapat" class="form-control bc" required
+                        onkeyup="get_namas(this.value, $('#rpr'),this)">
                     <div class="invalid-feedback">
                         Pemimpin rapat harus diisi.
                     </div>
-                </div>
-                {{-- <div class="mb-3">
-                    <label class="form-label">Pencatat/Notulis<span class="text-danger">*</span></label>
-                    <input type="text" name="pencatat" class="form-control bc" required value="">
-                    <div class="invalid-feedback">
-                        Pencatat/Notulis harus diisi.
+                    <div id="rpr">
+
                     </div>
-                </div> --}}
+                </div>
+
                 <div class="mb-3 fs__child form-label">
                     Peserta rapat<span class="text-danger">*</span>
                     <div id="pr" class="mb-3">
@@ -101,55 +108,52 @@
                         Peserta rapat harus diisi.
                     </div>
                 </div>
-                <div class="form-check mb-2">
+                {{-- <div class="mb-2">
                     <input type="checkbox"
                         onclick="this.checked ? $('#container-KSM').removeClass('d-none') : $('#container-KSM').addClass('d-none')"
-                        class="form-check-input" id="exampleCheck1">
+                        class="form-check-input mr-3" id="exampleCheck1">
                     <label class="form-check-label bc mb-2" for="exampleCheck1">Bersama dengan
                         KSM</label>
+                    <input type="checkbox"
+                        onclick="this.checked ? $('#container-Kabag').removeClass('d-none') : $('#container-Kabag').addClass('d-none')"
+                        class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label bc mb-2" for="exampleCheck1">Bersama dengan
+                        KABAG</label>
                 </div>
-                <div class="row gap-2 " style="margin-left: 0.20rem!important">
+                <div class="row gap-2 mb-2" style="margin-left: 0.20rem!important">
                     <div class="col-lg-5 col-sm-12 signature-pad-form fs__child m-0 p-0 " id="form_tanda_tangan_pejabat">
-                        <label for="nama_jabatan_pejabat" class="fs__child  w-100 form-label mt-2">Jabatan pejabat
-                            <span class="text-danger">*</span></label>
+                        <label for="nama_jabatan_pejabat" class="fs__child  w-100 form-label mt-2">Jabatan pejabat</label>
                         <input type="text" id="nama_jabatan_pejabat" name="nama_jabatan_pejabat" class="form-control bc"
-                            required value="">
+                            value="">
                         <div class="invalid-feedback">
                             Jabatan pejabat harus diisi.
                         </div>
                         <label for="tanda_tangan_pejabat" class="fs__child  w-100 form-label mt-2">Tanda tangan
                             Pejabat<span class="text-danger">*</span></label>
-                        <input type="text" class="d-none" name="tanda_tangan_pejabat" id="tanda_tangan_pejabat"
-                            class="form-control bc" required>
-                        <canvas width="400px" class="signature-pad" id="canvas_tanda_tangan_pejabat"></canvas>
-                        <p><a href="#" class="btn" id="clear_tanda_tangan_pejabat">Clear</a>
-                        </p>
-                        <div class="invalid-feedback">
-                            Tanda tangan pejabat harus diisi.
-                        </div>
-                        <label for="nama_pejabat" class="fs__child w-100 form-label">Nama Pejabat
-                            <span class="text-danger">*</span></label>
-                        <input type="text" id="nama_pejabat" name="nama_pejabat" class="form-control bc" required>
+                        <input type="file" name="tanda_tangan_pejabat" id="tanda_tangan_pejabat" class="form-control bc"
+                            id="" accept=“.png,.jpg,.jpeg,.webp,image/png”></input>
+                        <label for="nama_pejabat" class="fs__child w-100 form-label">Nama Pejabat</label>
+                        <input type="text" id="nama_pejabat" name="nama_pejabat" class="form-control bc">
                         <div class="invalid-feedback">
                             Nama pejabat harus diisi.
                         </div>
-                        <label for="NIP_pejabat" class="fs__child  w-100 form-label">NIP Pejabat
-                            <span class="text-danger">*</span></label>
-                        <input type="text" id="NIP_pejabat" name="NIP_pejabat" class="form-control bc" required
+                        <label for="NIP_pejabat" class="fs__child  w-100 form-label">NIP Pejabat</label>
+                        <input type="text" id="NIP_pejabat" name="NIP_pejabat" class="form-control bc"
                             value="">
                         <div class="invalid-feedback">
                             NIP pejabat harus diisi.
                         </div>
-                        {{-- <button class="submit-button" id="submit_tanda_tangan_pejabat">SUBMIT</button> --}}
                     </div>
                     <div id="container-KSM" class="col-lg-5 col-sm-12 signature-pad-form fs__child d-none m-0 p-0"
                         id="form_tanda_tangan_ksm">
                         <label for="nama_jabatan_KSM" class="fs__child  w-100 form-label mt-2">Jabatan Ketua KSM
                             <span class="text-danger">*</span></label>
-                        <input type="text" value="" id="nama_jabatan_KSM" name="nama_jabatan_KSM"
-                            class="form-control bc">
+                        <input type="text" id="nama_jabatan_KSM" name="nama_jabatan_KSM" value="Ketua KSM"
+                            class="form-control bc" readonly>
                         <label for="tanda_tangan_ksm" class="fs__child  w-100 form-label mt-2">Tanda tangan
                             KSM</label>
+                        <input type="file" name="tanda_tangan_KSM" id="tanda_tangan_KSM" class="form-control bc"
+                            id="" accept=“.png,.jpg,.jpeg,.webp,image/png” required></input>
                         <input type="text" class="d-none" name="tanda_tangan_KSM" id="tanda_tangan_ksm"
                             class="form-control bc">
                         <canvas width="400px" class="signature-pad" id="canvas_tanda_tangan_ksm"></canvas>
@@ -162,13 +166,34 @@
                         </label>
                         <input type="text" id="NIP_KSM" name="NIP_KSM" class="form-control bc">
                     </div>
-                </div>
+                    <div id="container-Kabag" class="col-lg-5 col-sm-12 signature-pad-form fs__child d-none m-0 p-0"
+                        id="form_tanda_tangan_Kabag">
+                        <label for="nama_jabatan_Kabag" class="fs__child  w-100 form-label mt-2">Jabatan Kabag
+                            <span class="text-danger">*</span></label>
+                        <input type="text" id="nama_jabatan_Kabag" name="nama_jabatan_Kabag" value="Ketua Bagian"
+                            class="form-control bc" readonly>
+                        <label for="tanda_tangan_Kabag" class="fs__child  w-100 form-label mt-2">Tanda tangan
+                            Kabag</label>
+                        <input type="file" name="tanda_tangan_Kabag" id="tanda_tangan_Kabag" class="form-control bc"
+                            id="" accept=“.png,.jpg,.jpeg,.webp,image/png” required></input>
+                        <input type="text" class="d-none" name="tanda_tangan_KSM" id="tanda_tangan_ksm"
+                            class="form-control bc">
+                        <canvas width="400px" class="signature-pad" id="canvas_tanda_tangan_ksm"></canvas>
+                        <p><a href="#" class="btn" id="clear_tanda_tangan_ksm">Clear</a>
+                        </p>
+                        <label for="nama_KSM" class="fs__child  w-100 form-label ">Nama Ketua KSM
+                        </label>
+                        <input type="text" id="nama_KSM" name="nama_KSM" class="form-control bc">
+                        <label for="NIP_KSM" class="fs__child  w-100 form-label ">NIP Ketua KSM
+                        </label>
+                        <input type="text" id="NIP_KSM" name="NIP_KSM" class="form-control bc">
+                    </div>
+                </div> 
                 <div class="col-6 mb-3 fs__child">
-                    <label for="bukti_presensi_kehadiran" class="form-label mt-2">Bukti presensi kehadiran<span
-                            class="text-danger">*</span></label>
+                    <label for="bukti_presensi_kehadiran" class="form-label mt-2">Bukti presensi kehadiran</label>
                     <input type="file" name="bukti_presensi_kehadiran" id="bukti_presensi_kehadiran"
-                        class="form-control bc" id="" maxlength="1200" accept=“.png,.jpg,.jpeg,.webp,image/png”
-                        required></input>
+                        class="form-control bc" id="" maxlength="1200"
+                        accept=“.png,.jpg,.jpeg,.webp,image/png”></input>
                     <div class="invalid-feedback">
                         Bukti presensi harus diisi.
                     </div>
@@ -180,39 +205,36 @@
                     <div class="invalid-feedback">
                         File pendukung harus diisi.
                     </div>
-                </div>
+                </div> --}}
                 <div class="mb-3">
-                    <label class="form-label">Persoalan yang dibahas<span class="text-danger">*</span></label>
+                    <label class="form-label">Persoalan yang dibahas</label>
                     <div>
-                        <label for="mahasiswa" class="form-label">Perihal Mahasiswa<span
-                                class="text-danger">*</span><br><span class="fs__normal">Contoh :
+                        <label for="mahasiswa" class="form-label">Perihal Mahasiswa<br><span class="fs__normal">Contoh :
                                 mahasiswa bermasalah,
                                 prestasi mahasiswa, dan segala hal lain yang berhubungan dengan
                                 mahasiswa Fakultas
                                 Kedokteran</span></label>
-                        <textarea name="mahasiswa" id="mahasiswa" class="form-control bc valued" id="" cols="30"
-                            rows="10" required></textarea>
+                        <textarea name="mahasiswa" id="mahasiswa" class="form-control bc valued" id="" cols="30" rows="10"></textarea>
                         <div class="invalid-feedback">
                             Perihal mahasiswa harus diisi.
                         </div>
                     </div>
                     <div>
-                        <label for="dosen" class="form-label mt-2">Perihal Dosen<span class="text-danger">*</span>
+                        <label for="dosen" class="form-label mt-2">Perihal Dosen
                             <br><span class="fs__normal">Contoh :
                                 dosen
                                 yang mengambil studi lanjut tidak kunjung selesai (siapa), dosen
                                 berprestasi, dan segala hal lain
                                 yang
                                 berhubungan dengan dosen Fakultas Kedokteran</span></label>
-                        <textarea maxlength="1200" name="dosen" id="dosen" class="form-control bc valued" id=""
-                            cols="30" rows="10" required></textarea>
+                        <textarea maxlength="1200" name="dosen" id="dosen" class="form-control bc valued" id="" cols="30"
+                            rows="10"></textarea>
                         <div class="invalid-feedback">
                             Perihal dosen harus diisi.
                         </div>
                     </div>
                     <div>
-                        <label for="tendik" class="form-label mt-2">Perihal Tendik<span
-                                class="text-danger">*</span><br><span class="fs__normal">Contoh :
+                        <label for="tendik" class="form-label mt-2">Perihal Tendik<br><span class="fs__normal">Contoh :
                                 tendik
                                 yang perlu diberi penghargaan karena dedikasinya, tendik yang
                                 bermasalah (menolak tugas, tidak
@@ -220,22 +242,22 @@
                                 professional), dan segala hal
                                 lain
                                 yang berhubungan dengan tendik Fakultas Kedokteran</span></label>
-                        <textarea maxlength="1200" name="tendik" id="tendik" class="form-control bc valued" id=""
-                            cols="30" rows="10" required></textarea>
+                        <textarea maxlength="1200" name="tendik" id="tendik" class="form-control bc valued" id="" cols="30"
+                            rows="10"></textarea>
                         <div class="invalid-feedback">
                             Perihal tendik harus diisi.
                         </div>
                     </div>
                     <div>
-                        <label for="sarpras" class="form-label mt-2">Perihal sarana prasarana<span
-                                class="text-danger">*</span><br><span class="fs__normal">Contoh
+                        <label for="sarpras" class="form-label mt-2">Perihal sarana prasarana<br><span
+                                class="fs__normal">Contoh
                                 : tindak lanjut perbaikan sarana prasarana yang rusak, kebutuhan
                                 penunjang perkuliahan yang segera
                                 dibutuhkan, dan segala hal lain yang berhubungan dengan sarana
                                 prasarana di Fakultas
                                 Kedokteran</span></label>
                         <textarea maxlength="1200" name="sarpras" id="sarpras" class="form-control bc valued" id=""
-                            cols="30" rows="10" required></textarea>
+                            cols="30" rows="10"></textarea>
                         <div class="invalid-feedback">
                             Perihal sarana prasarana harus diisi.
                         </div>
@@ -252,7 +274,12 @@
                 </div>
                 <div>
                     <label for="tanggapan_peserta_rapat" class="form-label mt-2">Tanggapan Peserta Rapat<span
-                            class="text-danger">*</span></label>
+                            class="text-danger">*</span>
+                        <br><span class="fs__normal">Contoh:<br>
+                            Ibu Fitriani:
+                            "Ada beberapa kekhawatiran terkait kesejahteraan dosen yang perlu perhatian lebih. Saya berharap
+                            kita bisa mengalokasikan waktu khusus untuk membahas hal ini di rapat selanjutnya."</span>
+                    </label>
                     <textarea maxlength="1200" name="tanggapan_peserta_rapat" id="tanggapan_peserta_rapat"
                         class="form-control bc valued" cols="30" rows="10" required></textarea>
                     <div class="invalid-feedback">
@@ -260,7 +287,16 @@
                     </div>
                 </div>
                 <div>
-                    <label for="simpulan" class="form-label mt-2">Simpulan<span class="text-danger ">*</span></label>
+                    <label for="simpulan" class="form-label mt-2">Simpulan<span class="text-danger ">*</span>
+                        <br><span class="fs__normal">Contoh:<br>
+                            Ditetapkan bahwa akan dilakukan evaluasi kurikulum secara menyeluruh dalam waktu dua bulan ke
+                            depan.
+                            <br>Rencana pengembangan fasilitas akan disusun oleh tim khusus dan dipresentasikan pada rapat
+                            berikutnya.
+                            <br>Kesejahteraan dosen akan menjadi fokus pembahasan pada rapat yang akan datang, dengan
+                            mengundang
+                            perwakilan dosen untuk memberikan masukan.</span>
+                    </label>
                     <textarea maxlength="1200" name="simpulan" id="simpulan" class="form-control bc valued" cols="30"
                         rows="10" required></textarea>
                     <div class="invalid-feedback">
@@ -275,7 +311,9 @@
 @section('js')
     <script>
         $(function() {
-            $("#tanggal_rapat").datepicker();
+            $("#tanggal_rapat").datepicker({
+                dateFormat: 'dd-mm-yy'
+            }).val();
         });
     </script>
     <script>
@@ -300,11 +338,13 @@
     </script>
     <script>
         class DynamicInputManager {
-            constructor(containerId, addButtonId, className) {
+            constructor(containerId, addButtonId, className, category) {
                 this.container = document.getElementById(containerId);
+                this.containerId = containerId;
                 this.addButton = document.getElementById(addButtonId);
                 this.className = className;
                 this.containerId = containerId;
+                this.category = category;
                 this.inputCount = 0;
                 this.addButton.addEventListener('click', () => this.addInput());
             }
@@ -333,6 +373,15 @@
                 input.classList.add('form-control');
                 input.classList.add('bc');
 
+                const recomendations = document.createElement('div')
+                if (this.category == 'person') {
+                    recomendations.id = this.containerId + this.inputCount
+                    input.addEventListener('keyup', () => {
+                        get_namas(input.value, $(`#${this.containerId + this.inputCount}`), input)
+                    })
+                }
+
+
                 // Create the remove button
                 const removeButton = document.createElement('button');
                 removeButton.classList.add('btn', 'btn-danger');
@@ -346,6 +395,9 @@
 
                 // Append the div to the container
                 this.container.appendChild(inputDiv);
+                if (this.category == 'person') {
+                    this.container.appendChild(recomendations)
+                }
             }
 
             removeInput(inputDivId) {
@@ -355,13 +407,15 @@
                 }
                 // Increment input count
                 this.inputCount--;
-                if (this.inputCount == 0) document.getElementById('validator_' + this.containerId).required = false
+                if (this.inputCount == 0) document.getElementById('validator_' + this.containerId).required = true
             }
         }
         // Initialize the manager
         document.addEventListener('DOMContentLoaded', () => {
-            const dynamicInputManagerSu = new DynamicInputManager('su', 'add-su-button', 'susunan_acara[]');
-            const dynamicInputManagerPr = new DynamicInputManager('pr', 'add-pr-button', 'peserta_rapat[]');
+            const dynamicInputManagerSu = new DynamicInputManager('su', 'add-su-button', 'susunan_acara[]',
+                'not_person');
+            const dynamicInputManagerPr = new DynamicInputManager('pr', 'add-pr-button', 'peserta_rapat[]',
+                'person');
         });
         // Function create canvas
         function set_canvas(id) {
@@ -419,7 +473,32 @@
                 clearPad();
             })
         }
-        set_canvas('tanda_tangan_pejabat')
-        set_canvas('tanda_tangan_ksm')
+        // set_canvas('tanda_tangan_pejabat')
+        // set_canvas('tanda_tangan_ksm')
+        function get_namas(keyword, parent, element) {
+            $.ajax({
+                url: `{{ route('get_namas') }}?keyword=${keyword}`,
+                statusCode: {
+                    200: function(xhr) {
+                        parent.empty(); // Clear previous suggestions
+
+                        xhr.forEach(value => {
+                            parent.append(
+                                `<div class="suggestion-item " style="cursor: pointer">${value.nama_lengkap}</div>`
+                            );
+                        });
+
+                        // Optional: Add click handler to suggestion items
+                        $('.suggestion-item').on('click', function() {
+                            element.value = $(this).text(); // Set input value
+                            parent.empty(); // Clear suggestions after selection
+                        });
+                    },
+                    404: function() {
+                        alert("Page not found");
+                    }
+                }
+            });
+        }
     </script>
 @endsection

@@ -30,7 +30,11 @@ class Laporan extends Model
         'tanda_tangan_KSM',
         'nama_KSM',
         'NIP_KSM',
-        'persoalan_yang_dibahas',
+        'mahasiswa',
+        'dosen',
+        'tendik',
+        'sarpras',
+        'lain_lain',
         'tanggapan_peserta_rapat',
         'simpulan',
     ];

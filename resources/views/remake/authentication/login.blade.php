@@ -38,9 +38,17 @@
                                     </div>
                                     <div class="mb-4">
                                         <label for="exampleInputPassword1" class="form-label">Password</label>
-                                        <input type="password" name="password" class="form-control bc"
-                                            id="exampleInputPassword1">
+                                        <div class="input-group mb-3">
+                                            <input id="password" type="password" name="password"
+                                                class="form-control bc">
+                                            <iconify-icon class="input-group-text"
+                                                onclick="if($('#password').attr('type')=='password'){$('#password').attr('type','text');this.icon ='mdi:eye';}else{$('#password').attr('type','password');this.icon ='mdi:eye-off';};"
+                                                style="cursor: pointer" icon="mdi:eye-off"></iconify-icon>
+                                            {{-- <iconify-icon class="input-group-text" style="cursor: pointer"
+                                                icon="mdi:eye-off"></iconify-icon> --}}
+                                        </div>
                                     </div>
+
                                     <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4">Sign
                                         In</button>
                                     <span class="text-center">Hubungi IT Fakultas Kedokteran untuk penanganan lupa
