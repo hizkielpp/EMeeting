@@ -39,8 +39,6 @@ class LaporanController extends Controller
             }
             $data['tanggal_rapat'] = $data['tanggal_rapat'] . ' ' . $data['jam_rapat'] . ':00';
             $data['tanggal_rapat'] = Carbon::createFromFormat('d-m-Y H:i:s', $data['tanggal_rapat'])->format('Y-m-d H:i:s');
-            return $data;
-            unset($data['mahasiswa'], $data['dosen'], $data['tendik'], $data['sarpras'], $data['lain_lain']);
             $laporan = new Laporan($data);
             $laporan->fk_user = Auth::id();
             $laporan->fk_unit = Auth::user()->fk_unit;
@@ -89,12 +87,16 @@ class LaporanController extends Controller
                     ->orWhere('pemimpin_rapat', 'like', '%' . $search . '%');
             });
         })
-            ->select('users.username', 'laporans.*')
+            ->select('users.username', 'laporans.*', DB::raw('IFNULL(tanda_tangan_pejabat, NULL) as belum'))
             ->where('laporans.fk_unit', '=', Auth::user()->fk_unit)
             ->orderBy('tanggal_rapat', 'desc')
             ->paginate(5);
         foreach ($laporans as $value) {
-            $value['persoalan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['persoalan_yang_dibahas']));
+            $value['mahasiswa_array'] = array_merge(preg_split('/\n|\r\n?/', $value['mahasiswa']));
+            $value['dosen_array'] = array_merge(preg_split('/\n|\r\n?/', $value['dosen']));
+            $value['tendik_array'] = array_merge(preg_split('/\n|\r\n?/', $value['tendik']));
+            $value['sarpras_array'] = array_merge(preg_split('/\n|\r\n?/', $value['sarpras']));
+            $value['lain_lain_array'] = array_merge(preg_split('/\n|\r\n?/', $value['lain_lain']));
             $value['tanggapan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['tanggapan_peserta_rapat']));
             $value['simpulan_array'] = array_merge(preg_split('/\n|\r\n?/', $value['simpulan']));
         }
@@ -223,6 +225,33 @@ class LaporanController extends Controller
         try {
             $data = $request->validationData();
             $laporan = Laporan::find($request->id_laporan);
+            // check condition for pejabat
+            if (isset($data['tanda_tangan_pejabat'])) {
+                $fileName = auth()->id() . '_' . rand(10000, 99999) . '_' . auth()->id() . '.' . $request->tanda_tangan_pejabat->extension();
+                $type = $request->tanda_tangan_pejabat->getClientMimeType();
+                $size = $request->tanda_tangan_pejabat->getSize();
+                $request->tanda_tangan_pejabat->move('tanda_tangan', $fileName);
+                $data['tanda_tangan_pejabat'] = $fileName;
+                $this->delete_file($laporan->tanda_tangan_pejabat);
+            }
+            // check condition for KSM
+            if (isset($data['tanda_tangan_KSM'])) {
+                $fileName = auth()->id() . '_' . rand(10000, 99999) . '_' . auth()->id() . '.' . $request->tanda_tangan_KSM->extension();
+                $type = $request->tanda_tangan_KSM->getClientMimeType();
+                $size = $request->tanda_tangan_KSM->getSize();
+                $request->tanda_tangan_KSM->move('tanda_tangan', $fileName);
+                $data['tanda_tangan_KSM'] = $fileName;
+                $this->delete_file($laporan->tanda_tangan_KSM);
+            }
+            // check condition for KABAG
+            if (isset($data['tanda_tangan_Kabag'])) {
+                $fileName = auth()->id() . '_' . rand(10000, 99999) . '_' . auth()->id() . '.' . $request->tanda_tangan_Kabag->extension();
+                $type = $request->tanda_tangan_Kabag->getClientMimeType();
+                $size = $request->tanda_tangan_Kabag->getSize();
+                $request->tanda_tangan_Kabag->move('tanda_tangan', $fileName);
+                $data['tanda_tangan_Kabag'] = $fileName;
+                $this->delete_file($laporan->tanda_tangan_Kabag);
+            }
             if (isset($data['bukti_presensi_kehadiran'])) {
                 $fileName = auth()->id() . '_' . rand(10000, 99999) . '_' . auth()->id() . '.' . $request->bukti_presensi_kehadiran->extension();
                 $type = $request->bukti_presensi_kehadiran->getClientMimeType();
@@ -254,7 +283,7 @@ class LaporanController extends Controller
                 $peserta->save();
             }
             $data['tanggal_rapat'] = $data['tanggal_rapat'] . ' ' . $data['jam_rapat'] . ':00';
-            $data['tanggal_rapat'] = date_format(date_create($data['tanggal_rapat']), 'Y-m-d H:i:s');
+            $data['tanggal_rapat'] = Carbon::createFromFormat('d-m-Y H:i:s', $data['tanggal_rapat'])->format('Y-m-d H:i:s');
             unset($data['jam_rapat']);
             $laporan->update($data);
             return redirect()->back()->with('success', 'Berhasil mengubah laporan');
@@ -264,16 +293,7 @@ class LaporanController extends Controller
     }
     public function print_laporan(Request $request)
     {
-        // try {
-        //     $data = [
-        //         'title' => 'Welcome to ItSolutionStuff.com',
-        //         'date' => date('m/d/Y'),
-        //     ];
-        //     $pdf = PDF::loadView('remake.laporan.notula', $data);
-        //     return $pdf->download('notula.pdf');
-        // } catch (\Exception $e) {
-        //     return $e;
-        // }
+
         $pdf = Pdf::loadView('remake.laporan.notula');
         return $pdf->download();
     }

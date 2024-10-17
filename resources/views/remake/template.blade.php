@@ -26,6 +26,20 @@
         .form-control {
             border-color: #252525;
         }
+
+        .hoverable:hover {
+            scale: 1.5;
+        }
+
+        /* suggestion item style */
+        .suggestion-item {
+            padding: 5px;
+        }
+
+        .suggestion-item:hover {
+            border-radius: .5rem !important;
+            border: 2px solid var(--primary-color);
+        }
     </style>
 </head>
 

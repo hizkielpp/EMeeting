@@ -29,15 +29,6 @@
             cursor: pointer;
             margin-top: 2rem;
         }
-
-        .suggestion-item {
-            padding: 5px;
-        }
-
-        .suggestion-item:hover {
-            border-radius: .5rem !important;
-            border: 2px solid var(--primary-color);
-        }
     </style>
 @endsection
 @section('content')
@@ -56,7 +47,7 @@
                     </div>
                 </div>
                 <div class="mb-3 fs__child form-label">
-                    Tanggal Rapat<span class="text-danger">*</span><input name="tanggal_rapat" value="{{ date('m-d-Y') }}"
+                    Tanggal Rapat<span class="text-danger">*</span><input name="tanggal_rapat" value="{{ date('d-m-Y') }}"
                         type="text" class="fs__normal form-control bc" id="tanggal_rapat" required>
                     <div class="invalid-feedback">
                         Tanggal rapat harus diisi.
