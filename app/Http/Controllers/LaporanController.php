@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
+use Webklex\PDFMerger\Facades\PDFMergerFacade as PDFMerger;
 // use PhpOffice\PhpWord\IOFactory;
 // use PhpOffice\PhpWord\TemplateProcessor;
 
@@ -87,7 +88,7 @@ class LaporanController extends Controller
                     ->orWhere('pemimpin_rapat', 'like', '%' . $search . '%');
             });
         })
-            ->select('users.username', 'laporans.*', DB::raw('IFNULL(tanda_tangan_pejabat, NULL) as belum'))
+            ->select('users.username', 'laporans.*', DB::raw('IFNULL(tanda_tangan_pejabat, NULL)&&IFNULL(bukti_presensi_kehadiran, NULL) as belum'))
             ->where('laporans.fk_unit', '=', Auth::user()->fk_unit)
             ->orderBy('tanggal_rapat', 'desc')
             ->paginate(5);
@@ -285,6 +286,7 @@ class LaporanController extends Controller
             $data['tanggal_rapat'] = $data['tanggal_rapat'] . ' ' . $data['jam_rapat'] . ':00';
             $data['tanggal_rapat'] = Carbon::createFromFormat('d-m-Y H:i:s', $data['tanggal_rapat'])->format('Y-m-d H:i:s');
             unset($data['jam_rapat']);
+
             $laporan->update($data);
             return redirect()->back()->with('success', 'Berhasil mengubah laporan');
         } catch (\Exception $e) {
@@ -294,7 +296,28 @@ class LaporanController extends Controller
     public function print_laporan(Request $request)
     {
 
-        $pdf = Pdf::loadView('remake.laporan.notula');
-        return $pdf->download();
+        $laporan = Laporan::find($request->id);
+        $laporan['mahasiswa_array'] = array_merge(preg_split('/\n|\r\n?/', $laporan['mahasiswa']));
+        $laporan['dosen_array'] = array_merge(preg_split('/\n|\r\n?/', $laporan['dosen']));
+        $laporan['tendik_array'] = array_merge(preg_split('/\n|\r\n?/', $laporan['tendik']));
+        $laporan['sarpras_array'] = array_merge(preg_split('/\n|\r\n?/', $laporan['sarpras']));
+        $laporan['lain_lain_array'] = array_merge(preg_split('/\n|\r\n?/', $laporan['lain_lain']));
+        $laporan['tanggapan_array'] = array_merge(preg_split('/\n|\r\n?/', $laporan['tanggapan_peserta_rapat']));
+        $laporan['simpulan_array'] = array_merge(preg_split('/\n|\r\n?/', $laporan['simpulan']));
+        $pdf = Pdf::loadView('remake.laporan.notula', ['laporan' => $laporan]);
+        $output_filename = time() . Auth::id() . 'output' . '.pdf';
+        $pdf->save('output/' . $output_filename);
+        // init PDFMerger
+        $pdf = PDFMerger::init();
+        // add output (notula) to the merger
+        $pdf->addPDF('output/' . $output_filename, 'all');
+        // add bukti kehadiran
+        $pdf->addPDF('bukti/' . $laporan->bukti_presensi_kehadiran, 'all');
+        // add file pendukung if exist
+        $pdf->addPDF('bukti/' . $laporan->file_pendukung_rapat, 'all');
+        $fileName = time() . '.pdf';
+        $pdf->merge();
+        $pdf->save('output/' . $fileName);
+        return response()->download('output/' . $fileName);
     }
 }

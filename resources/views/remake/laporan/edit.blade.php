@@ -132,18 +132,21 @@
                         </div>
                         <label for="tanda_tangan_pejabat" class="fs__child  w-100 form-label mt-2">Tanda tangan
                             Pejabat<span class="text-danger">*</span></label>
-                        <img width="100px" src="{{ asset('tanda_tangan\\' . $laporan->tanda_tangan_pejabat) }}"
-                            alt="">
+                        @if (isset($laporan->tanda_tangan_pejabat))
+                            <img width="100px" src="{{ asset('tanda_tangan\\' . $laporan->tanda_tangan_pejabat) }}"
+                                alt="">
+                        @endif
                         <input type="file" name="tanda_tangan_pejabat" id="tanda_tangan_pejabat"
                             class="form-control bc" id="" accept=“.png,.jpg,.jpeg,.webp,image/png”></input>
                         <label for="nama_pejabat" class="fs__child w-100 form-label">Nama Pejabat</label>
-                        <input type="text" id="nama_pejabat" name="nama_pejabat" class="form-control bc">
+                        <input type="text" id="nama_pejabat" name="nama_pejabat" value="{{ $laporan->nama_pejabat }}"
+                            class="form-control bc">
                         <div class="invalid-feedback">
                             Nama pejabat harus diisi.
                         </div>
                         <label for="NIP_pejabat" class="fs__child  w-100 form-label">NIP Pejabat</label>
                         <input type="text" id="NIP_pejabat" name="NIP_pejabat" class="form-control bc"
-                            value="">
+                            value="{{ $laporan->NIP_pejabat }}">
                         <div class="invalid-feedback">
                             NIP pejabat harus diisi.
                         </div>
@@ -156,16 +159,20 @@
                             class="form-control bc" readonly>
                         <label for="tanda_tangan_ksm" class="fs__child  w-100 form-label mt-2">Tanda tangan
                             KSM</label>
+                        @if (isset($laporan->tanda_tangan_KSM))
+                            <img width="100px" src="{{ asset('tanda_tangan\\' . $laporan->tanda_tangan_KSM) }}"
+                                alt="">
+                        @endif
                         <input type="file" name="tanda_tangan_KSM" id="tanda_tangan_KSM" class="form-control bc"
                             id="" accept=“.png,.jpg,.jpeg,.webp,image/png”></input>
-                        <input type="text" class="d-none" name="tanda_tangan_KSM" id="tanda_tangan_ksm"
-                            class="form-control bc">
                         <label for="nama_KSM" class="fs__child  w-100 form-label ">Nama Ketua KSM
                         </label>
-                        <input type="text" id="nama_KSM" name="nama_KSM" class="form-control bc">
+                        <input type="text" id="nama_KSM" value="{{ $laporan->nama_KSM }}" name="nama_KSM"
+                            class="form-control bc">
                         <label for="NIP_KSM" class="fs__child  w-100 form-label ">NIP Ketua KSM
                         </label>
-                        <input type="text" id="NIP_KSM" name="NIP_KSM" class="form-control bc">
+                        <input type="text" id="NIP_KSM" name="NIP_KSM" value="{{ $laporan->NIP_KSM }}"
+                            class="form-control bc">
                     </div>
                     <div id="container-Kabag" class="col-lg-5 col-sm-12 signature-pad-form fs__child d-none m-0 p-0"
                         id="form_tanda_tangan_Kabag">
@@ -175,31 +182,42 @@
                             class="form-control bc" readonly>
                         <label for="tanda_tangan_Kabag" class="fs__child  w-100 form-label mt-2">Tanda tangan
                             Kabag</label>
+                        @if (isset($laporan->tanda_tangan_Kabag))
+                            <img width="100px" src="{{ asset('tanda_tangan\\' . $laporan->tanda_tangan_Kabag) }}"
+                                alt="">
+                        @endif
                         <input type="file" name="tanda_tangan_Kabag" id="tanda_tangan_Kabag" class="form-control bc"
                             id="" accept=“.png,.jpg,.jpeg,.webp,image/png”></input>
-                        <input type="text" class="d-none" name="tanda_tangan_KSM" id="tanda_tangan_ksm"
+                        <label for="nama_Kabag" class="fs__child  w-100 form-label ">Nama Ketua KSM
+                        </label>
+                        <input type="text" id="nama_Kabag" value="{{ $laporan->nama_Kabag }}"name="nama_Kabag"
                             class="form-control bc">
-                        <label for="nama_KSM" class="fs__child  w-100 form-label ">Nama Ketua KSM
+                        <label for="NIP_Kabag" class="fs__child  w-100 form-label ">NIP Ketua KSM
                         </label>
-                        <input type="text" id="nama_KSM" name="nama_KSM" class="form-control bc">
-                        <label for="NIP_KSM" class="fs__child  w-100 form-label ">NIP Ketua KSM
-                        </label>
-                        <input type="text" id="NIP_KSM" name="NIP_KSM" class="form-control bc">
+                        <input type="text" id="NIP_Kabag" value="{{ $laporan->NIP_Kabag }}" name="NIP_Kabag"
+                            class="form-control bc">
                     </div>
                 </div>
                 <div class="col-6 mb-3 fs__child">
-                    <label for="bukti_presensi_kehadiran" class="form-label mt-2">Bukti presensi kehadiran</label>
+                    @if (isset($laporan->bukti_presensi_kehadiran))
+                        <a href="{{ asset('bukti\\' . $laporan->bukti_presensi_kehadiran) }}" target="_blank">Lihat Bukti
+                            Presensi Kehadiran</a>
+                    @endif
+                    <label for="bukti_presensi_kehadiran" class="form-label mt-2 w-100">Bukti presensi kehadiran</label>
                     <input type="file" name="bukti_presensi_kehadiran" id="bukti_presensi_kehadiran"
-                        class="form-control bc" id="" maxlength="1200"
-                        accept=“.png,.jpg,.jpeg,.webp,image/png”></input>
+                        class="form-control bc" id="" maxlength="1200" accept=“.pdf”></input>
                     <div class="invalid-feedback">
                         Bukti presensi harus diisi.
                     </div>
                 </div>
                 <div class="col-6 mb-3 fs__child">
-                    <label for="file_pendukung_rapat" class="form-label mt-2">File pendukung rapat</label>
+                    @if (isset($laporan->file_pendukung_rapat))
+                        <a href="{{ asset('bukti\\' . $laporan->file_pendukung_rapat) }}" target="_blank">Lihat File
+                            Pendukung Rapat</a>
+                    @endif
+                    <label for="file_pendukung_rapat" class="form-label mt-2 w-100">File pendukung rapat</label>
                     <input type="file" name="file_pendukung_rapat" id="file_pendukung_rapat" class="form-control bc"
-                        id="" maxlength="1200" accept=“.png,.jpg,.jpeg,.webp,image/png”></input>
+                        id="" maxlength="1200" accept=“.pdf”></input>
                     <div class="invalid-feedback">
                         File pendukung harus diisi.
                     </div>

@@ -32,6 +32,10 @@ return new class extends Migration
             $table->text('tanda_tangan_KSM')->nullable();
             $table->text('nama_KSM')->nullable();
             $table->text('NIP_KSM')->nullable();
+            $table->string('nama_jabatan_Kabag')->nullable();
+            $table->text('tanda_tangan_Kabag')->nullable();
+            $table->text('nama_Kabag')->nullable();
+            $table->text('NIP_Kabag')->nullable();
             $table->string('bukti_presensi_kehadiran')->nullable();
             $table->string('file_pendukung_rapat')->nullable();
             $table->text('mahasiswa')->nullable();

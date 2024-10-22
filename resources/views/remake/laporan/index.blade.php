@@ -2,6 +2,7 @@
 @section('css')
 @endsection
 @section('content')
+
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Riwayat Laporan</h5>
@@ -154,7 +155,8 @@
                                                             :
                                                         </td>
                                                         <td class="text-start w-50">
-                                                            <img width="120px" src="{{ $item->tanda_tangan_KSM }}"
+                                                            <img width="120px"
+                                                                src="{{ asset('tanda_tangan//' . $item->tanda_tangan_KSM) }}"
                                                                 alt="">
                                                         </td>
                                                     </tr>
@@ -178,6 +180,54 @@
                                                         </td>
                                                         <td class="text-start w-50">
                                                             {{ $item->NIP_KSM }}
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                                @if (!is_null($item->tanda_tangan_Kabag))
+                                                    <tr>
+                                                        <td class="text-start w-25 bold">
+                                                            Jabatan Kabag
+                                                        </td>
+                                                        <td class="text-center w-25 p-1">
+                                                            :
+                                                        </td>
+                                                        <td class="text-start w-50">
+                                                            {{ $item->nama_jabatan_Kabag }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-start w-25 bold">
+                                                            Tanda Tangan Kabag
+                                                        </td>
+                                                        <td class="text-center w-25 p-1">
+                                                            :
+                                                        </td>
+                                                        <td class="text-start w-50">
+                                                            <img width="120px"
+                                                                src="{{ asset('tanda_tangan//' . $item->tanda_tangan_Kabag) }}"
+                                                                alt="">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-start w-25 bold">
+                                                            Nama Kabag
+                                                        </td>
+                                                        <td class="text-center w-25 p-1">
+                                                            :
+                                                        </td>
+                                                        <td class="text-start w-50">
+                                                            {{ $item->nama_Kabag }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-start w-25 bold">
+                                                            NIP Kabag
+                                                        </td>
+                                                        <td class="text-center w-25 p-1">
+                                                            :
+                                                        </td>
+                                                        <td class="text-start w-50">
+                                                            {{ $item->NIP_Kabag }}
                                                         </td>
                                                     </tr>
                                                 @endif

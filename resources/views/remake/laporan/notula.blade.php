@@ -73,6 +73,22 @@
 </html> --}}
 <!doctype html>
 <html lang="en">
+@php
+    $bulan = [
+        1 => 'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember',
+    ];
+@endphp
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -96,6 +112,7 @@
                         TEKNOLOGI</span><br>
                     <span class="fs-16">UNIVERSITAS DIPONEOGORO</span><br>
                     @if (isset($unit))
+                        {!! $unit !!}
                     @else
                         <span class="fs-14">FAKULTAS KEDOKTERAN</span>
                     @endif
@@ -121,27 +138,33 @@
             <tr>
                 <td>Nama Rapat</td>
                 <td>:</td>
-                <td>Rapat Kinerja Fakultas</td>
+                <td>{{ $laporan->nama_rapat }}</td>
             </tr>
             <tr>
                 <td>Hari, Tanggal</td>
                 <td>:</td>
-                <td>14 Oktober 2024</td>
+                <td>
+                    {{ date('d', strtotime($laporan->tanggal_rapat)) . ' ' . $bulan[date('m', strtotime($laporan->tanggal_rapat))] . ' ' . date('Y', strtotime($laporan->tanggal_rapat)) }}
+                </td>
             </tr>
             <tr>
                 <td>Pukul</td>
                 <td>:</td>
-                <td>06:00 WIB</td>
+                <td>{{ date('H:i:s', strtotime($laporan->tanggal_rapat)) }}</td>
             </tr>
             <tr>
                 <td>Tempat</td>
                 <td>:</td>
-                <td>RSG</td>
+                <td>{{ $laporan->tempat }}</td>
             </tr>
             <tr>
                 <td>Agenda</td>
                 <td>:</td>
-                <td>1. Penguatan Karakter<br>2. Peningkatan Animo PKM</td>
+                <td>
+                    @foreach ($laporan->susunans as $key => $item)
+                        {!! $key + 1 . '. ' . $item->nama_susunan . '<br>' !!}
+                    @endforeach
+                </td>
             </tr>
             <tr>
                 <td>Pimpinan Rapat</td>
@@ -151,7 +174,11 @@
             <tr>
                 <td>Peserta Rapat</td>
                 <td>:</td>
-                <td>1. Dosen FK<br>2. Tendik FK</td>
+                <td>
+                    @foreach ($laporan->pesertas as $key => $item)
+                        {!! $key + 1 . '. ' . $item->nama_peserta . '<br>' !!}
+                    @endforeach
+                </td>
             </tr>
 
         </table>
@@ -159,75 +186,64 @@
             <tr>
                 <td>Persoalan yang dibahas</td>
                 <td>:</td>
-                <td>Rapat dimulai dengan pemaparan mengenai pentingnya penguatan karakter mahasiswa dan bagaimana hal
-                    ini dapat berkontribusi pada peningkatan animo dalam Program Kreativitas Mahasiswa (PKM). Beberapa
-                    persoalan yang diangkat mencakup:
-                    Rendahnya partisipasi mahasiswa dalam PKM.
-                    Tantangan dalam membangun karakter mahasiswa yang mandiri dan kreatif.
-                    Keterbatasan program pelatihan dan sosialisasi terkait PKM.
-                    Rapat dimulai dengan pemaparan mengenai pentingnya penguatan karakter mahasiswa dan bagaimana hal
-                    ini dapat berkontribusi pada peningkatan animo dalam Program Kreativitas Mahasiswa (PKM). Beberapa
-                    persoalan yang diangkat mencakup:
-                    Rendahnya partisipasi mahasiswa dalam PKM.
-                    Tantangan dalam membangun karakter mahasiswa yang mandiri dan kreatif.
-                    Keterbatasan program pelatihan dan sosialisasi terkait PKM.
-                    Rapat dimulai dengan pemaparan mengenai pentingnya penguatan karakter mahasiswa dan bagaimana hal
-                    ini dapat berkontribusi pada peningkatan animo dalam Program Kreativitas Mahasiswa (PKM). Beberapa
-                    persoalan yang diangkat mencakup:
-                    Rendahnya partisipasi mahasiswa dalam PKM.
-                    Tantangan dalam membangun karakter mahasiswa yang mandiri dan kreatif.
-                    Keterbatasan program pelatihan dan sosialisasi terkait PKM.
-                    Rapat dimulai dengan pemaparan mengenai pentingnya penguatan karakter mahasiswa dan bagaimana hal
-                    ini dapat berkontribusi pada peningkatan animo dalam Program Kreativitas Mahasiswa (PKM). Beberapa
-                    persoalan yang diangkat mencakup:
-                    Rendahnya partisipasi mahasiswa dalam PKM.
-                    Tantangan dalam membangun karakter mahasiswa yang mandiri dan kreatif.
-                    Keterbatasan program pelatihan dan sosialisasi terkait PKM.
-                    Rapat dimulai dengan pemaparan mengenai pentingnya penguatan karakter mahasiswa dan bagaimana hal
-                    ini dapat berkontribusi pada peningkatan animo dalam Program Kreativitas Mahasiswa (PKM). Beberapa
-                    persoalan yang diangkat mencakup:
-                    Rendahnya partisipasi mahasiswa dalam PKM.
-                    Tantangan dalam membangun karakter mahasiswa yang mandiri dan kreatif.
-                    Keterbatasan program pelatihan dan sosialisasi terkait PKM.
-                    Rapat dimulai dengan pemaparan mengenai pentingnya penguatan karakter mahasiswa dan bagaimana hal
-                    ini dapat berkontribusi pada peningkatan animo dalam Program Kreativitas Mahasiswa (PKM). Beberapa
-                    persoalan yang diangkat mencakup:
-                    Rendahnya partisipasi mahasiswa dalam PKM.
-                    Tantangan dalam membangun karakter mahasiswa yang mandiri dan kreatif.
-                    Keterbatasan program pelatihan dan sosialisasi terkait PKM.</td>
+                <td>
+                    @foreach ($laporan->mahasiswa_array as $item)
+                        {!! $item . '<br>' !!}
+                    @endforeach
+                    @foreach ($laporan->dosen_array as $item)
+                        {!! $item . '<br>' !!}
+                    @endforeach
+                    @foreach ($laporan->tendik_array as $item)
+                        {!! $item . '<br>' !!}
+                    @endforeach
+                    @foreach ($laporan->sarpras_array as $item)
+                        {!! $item . '<br>' !!}
+                    @endforeach
+                    @foreach ($laporan->lain_lain_array as $item)
+                        {!! $item . '<br>' !!}
+                    @endforeach
+                </td>
             </tr>
             <tr>
                 <td>Tanggapan peserta rapat</td>
                 <td>:</td>
-                <td>Peserta rapat memberikan berbagai tanggapan, antara lain:
-                    Dosen A: Menyatakan pentingnya integrasi materi penguatan karakter dalam kurikulum.
-                    Dosen B: Mengusulkan penyelenggaraan workshop dan seminar yang melibatkan alumni yang sukses dalam
-                    PKM.
-                    Mahasiswa C: Mengungkapkan perlunya dukungan lebih dari fakultas dalam hal pendanaan dan bimbingan
-                    untuk PKM.
-                    Mahasiswa D: Mengusulkan pembentukan kelompok studi yang fokus pada pengembangan ide PKM.</td>
+                <td>
+                    @foreach ($laporan->tanggapan_array as $item)
+                        {!! $item . '<br>' !!}
+                    @endforeach
+                </td>
             </tr>
             <tr>
                 <td>Simpulan</td>
                 <td>:</td>
-                <td>Rapat menghasilkan beberapa poin penting sebagai langkah tindak lanjut:
-                    Pengembangan kurikulum yang mencakup penguatan karakter.
-                    Penyelenggaraan workshop dan seminar untuk meningkatkan pemahaman mahasiswa mengenai PKM.
-                    Penyediaan dukungan pendanaan dan bimbingan dari dosen bagi mahasiswa yang berpartisipasi dalam PKM.
-                    Pembentukan kelompok studi untuk memfasilitasi diskusi dan pengembangan ide-ide PKM.
-                    Rapat ditutup dengan harapan semua pihak berkomitmen untuk meningkatkan partisipasi dan kualitas PKM
-                    di fakultas.</td>
+                <td>
+                    @foreach ($laporan->simpulan_array as $item)
+                        {!! $item . '<br>' !!}
+                    @endforeach
+                </td>
             </tr>
         </table>
         <table class="tanda_tangan">
             <tr>
-                <td>Ketua KSM</td>
-                <td>Supervisor IT</td>
+                <td>{{ isset($laporan->nama_jabatan_KSM) ? $laporan->nama_jabatan_KSM : '' }}</td>
+                <td>{{ isset($laporan->nama_jabatan_pejabat) ? $laporan->nama_jabatan_pejabat : '' }}</td>
             </tr>
             <tr>
                 {{-- Tanda tangan --}}
-                <td><img src="{{ asset('tanda_tangan/signature.jpg') }}" width="200px" alt=""></td>
-                <td><img src="{{ asset('tanda_tangan/signature.jpg') }}" width="200px" alt=""></td>
+                <td>
+                    @if (isset($laporan->tanda_tangan_KSM))
+                        <img src="{{ asset('tanda_tangan/' . $laporan->tanda_tangan_KSM) }}" width="200px"
+                            alt="">
+                    @endif
+                </td>
+                <td>
+                <td>
+                    @if (isset($laporan->tanda_tangan_pejabat))
+                        <img src="{{ asset('tanda_tangan/' . $laporan->tanda_tangan_pejabat) }}" width="200px"
+                            alt="">
+                    @endif
+                </td>
+                </td>
             </tr>
             <tr>
                 <td>Pak KSM</td>
