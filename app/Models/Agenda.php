@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Susunan extends Model
+class Agenda extends Model
 {
     use HasFactory;
     protected $fillable = [
         'fk_laporan',
-        'nama_susunan',
+        'nama_agenda',
     ];
 }

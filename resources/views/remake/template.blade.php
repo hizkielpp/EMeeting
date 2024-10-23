@@ -25,7 +25,9 @@
 
         .form-control {
             border-color: #252525;
+            color: black !important;
         }
+
 
         .hoverable:hover {
             scale: 1.5;

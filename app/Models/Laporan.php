@@ -50,8 +50,8 @@ class Laporan extends Model
     {
         return $this->hasMany(Peserta::class, 'fk_laporan', 'id');
     }
-    public function susunans()
+    public function agendas()
     {
-        return $this->hasMany(Susunan::class, 'fk_laporan', 'id');
+        return $this->hasMany(Agenda::class, 'fk_laporan', 'id');
     }
 }

@@ -87,51 +87,54 @@
                                                         {{ $item->username }}
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td class="text-start w-25 bold">
-                                                        Jabatan Pejabat
-                                                    </td>
-                                                    <td class="text-center w-25 p-1">
-                                                        :
-                                                    </td>
-                                                    <td class="text-start w-50">
-                                                        {{ $item->nama_jabatan_pejabat }}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-start w-25 bold">
-                                                        Tanda Tangan Pejabat
-                                                    </td>
-                                                    <td class="text-center w-25 p-1">
-                                                        :
-                                                    </td>
-                                                    <td class="text-start w-50">
-                                                        <img width="120px" src="{{ $item->tanda_tangan_pejabat }}"
-                                                            alt="">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-start w-25 bold">
-                                                        Nama Pejabat
-                                                    </td>
-                                                    <td class="text-center w-25 p-1">
-                                                        :
-                                                    </td>
-                                                    <td class="text-start w-50">
-                                                        {{ $item->nama_pejabat }}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-start w-25 bold">
-                                                        NIP Pejabat
-                                                    </td>
-                                                    <td class="text-center w-25 p-1">
-                                                        :
-                                                    </td>
-                                                    <td class="text-start w-50">
-                                                        {{ $item->NIP_pejabat }}
-                                                    </td>
-                                                </tr>
+                                                @if (!is_null($item->nama_jabatan_pejabat))
+                                                    <tr>
+                                                        <td class="text-start w-25 bold">
+                                                            Jabatan Pejabat
+                                                        </td>
+                                                        <td class="text-center w-25 p-1">
+                                                            :
+                                                        </td>
+                                                        <td class="text-start w-50">
+                                                            {{ $item->nama_jabatan_pejabat }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-start w-25 bold">
+                                                            Tanda Tangan Pejabat
+                                                        </td>
+                                                        <td class="text-center w-25 p-1">
+                                                            :
+                                                        </td>
+                                                        <td class="text-start w-50">
+                                                            <img width="120px"
+                                                                src="{{ asset('tanda_tangan//' . $item->tanda_tangan_pejabat) }}"
+                                                                alt="">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-start w-25 bold">
+                                                            Nama Pejabat
+                                                        </td>
+                                                        <td class="text-center w-25 p-1">
+                                                            :
+                                                        </td>
+                                                        <td class="text-start w-50">
+                                                            {{ $item->nama_pejabat }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-start w-25 bold">
+                                                            NIP Pejabat
+                                                        </td>
+                                                        <td class="text-center w-25 p-1">
+                                                            :
+                                                        </td>
+                                                        <td class="text-start w-50">
+                                                            {{ $item->NIP_pejabat }}
+                                                        </td>
+                                                    </tr>
+                                                @endif
                                                 @if (!is_null($item->tanda_tangan_KSM))
                                                     <tr>
                                                         <td class="text-start w-25 bold">
@@ -152,7 +155,8 @@
                                                             :
                                                         </td>
                                                         <td class="text-start w-50">
-                                                            <img width="120px" src="{{ $item->tanda_tangan_KSM }}"
+                                                            <img width="120px"
+                                                                src="{{ asset('tanda_tangan//' . $item->tanda_tangan_KSM) }}"
                                                                 alt="">
                                                         </td>
                                                     </tr>
@@ -179,49 +183,108 @@
                                                         </td>
                                                     </tr>
                                                 @endif
+                                                @if (!is_null($item->tanda_tangan_Kabag))
+                                                    <tr>
+                                                        <td class="text-start w-25 bold">
+                                                            Jabatan Kabag
+                                                        </td>
+                                                        <td class="text-center w-25 p-1">
+                                                            :
+                                                        </td>
+                                                        <td class="text-start w-50">
+                                                            {{ $item->nama_jabatan_Kabag }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-start w-25 bold">
+                                                            Tanda Tangan Kabag
+                                                        </td>
+                                                        <td class="text-center w-25 p-1">
+                                                            :
+                                                        </td>
+                                                        <td class="text-start w-50">
+                                                            <img width="120px"
+                                                                src="{{ asset('tanda_tangan//' . $item->tanda_tangan_Kabag) }}"
+                                                                alt="">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-start w-25 bold">
+                                                            Nama Kabag
+                                                        </td>
+                                                        <td class="text-center w-25 p-1">
+                                                            :
+                                                        </td>
+                                                        <td class="text-start w-50">
+                                                            {{ $item->nama_Kabag }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-start w-25 bold">
+                                                            NIP Kabag
+                                                        </td>
+                                                        <td class="text-center w-25 p-1">
+                                                            :
+                                                        </td>
+                                                        <td class="text-start w-50">
+                                                            {{ $item->NIP_Kabag }}
+                                                        </td>
+                                                    </tr>
+                                                @endif
                                             </table>
                                         </span>
                                     </th>
                                     <td class="text-wrap w-75 align-top">
                                         <div class="content">
-                                            <b>Persoalan yang dibahas</b><br>
+
                                             <div class="short-content">
-                                                {!! Str::limit(implode('<br>', $item->persoalan_array), 400) !!}
+                                                {!! Str::limit(
+                                                    '<b>Persoalan yang dibahas</b><br>' .
+                                                        (!is_null($item->mahasiswa) ? '<b>Mahasiswa:</b><br>' . implode('<br>', $item->mahasiswa_array) . '<br>' : '') .
+                                                        (!is_null($item->dosen) ? '<b>Dosen:</b><br>' . implode('<br>', $item->dosen_array) . '<br>' : '') .
+                                                        (!is_null($item->tendik) ? '<b>Tendik:</b><br>' . implode('<br>', $item->tendik_array) . '<br>' : '') .
+                                                        (!is_null($item->sarpras) ? '<b>Sarpras:</b><br>' . implode('<br>', $item->sarpras_array) . '<br>' : '') .
+                                                        (!is_null($item->lain_lain) ? '<b>Lain-lain:</b><br>' . implode('<br>', $item->lain_lain_array) . '<br>' : '') .
+                                                        '<b>Tanggapan Peserta Rapat</b><br>' .
+                                                        (!is_null($item->tanggapan_peserta_rapat) ? implode('<br>', $item->tanggapan_array) . '<br>' : '') .
+                                                        '<b>Simpulan Rapat</b><br>' .
+                                                        (!is_null($item->simpulan) ? implode('<br>', $item->simpulan_array) . '<br>' : ''),
+                                                    400,
+                                                ) !!}
+
                                             </div>
                                             <div class="full-content" style="display: none;">
-                                                @foreach ($item->persoalan_array as $p)
-                                                    {{ $p }}<br>
-                                                @endforeach
-                                                <b>Tanggapan Peserta Rapat</b><br>
-                                                @foreach ($item->tanggapan_array as $p)
-                                                    {{ $p }}<br>
-                                                @endforeach
-                                                <b>Simpulan</b><br>
-                                                @foreach ($item->simpulan_array as $p)
-                                                    {{ $p }}<br>
-                                                @endforeach
+                                                {!! '<b>Persoalan yang dibahas</b><br>' .
+                                                    (!is_null($item->mahasiswa) ? '<b>Mahasiswa:</b><br>' . implode('<br>', $item->mahasiswa_array) . '<br>' : '') .
+                                                    (!is_null($item->dosen) ? '<b>Dosen:</b><br>' . implode('<br>', $item->dosen_array) . '<br>' : '') .
+                                                    (!is_null($item->tendik) ? '<b>Tendik:</b><br>' . implode('<br>', $item->tendik_array) . '<br>' : '') .
+                                                    (!is_null($item->sarpras) ? '<b>Sarpras:</b><br>' . implode('<br>', $item->sarpras_array) . '<br>' : '') .
+                                                    (!is_null($item->lain_lain) ? '<b>Lain-lain:</b><br>' . implode('<br>', $item->lain_lain_array) . '<br>' : '') .
+                                                    '<b>Tanggapan Peserta Rapat</b><br>' .
+                                                    (!is_null($item->tanggapan_peserta_rapat) ? implode('<br>', $item->tanggapan_array) . '<br>' : '') .
+                                                    '<b>Simpulan Rapat</b><br>' .
+                                                    (!is_null($item->simpulan) ? implode('<br>', $item->simpulan_array) . '<br>' : '') !!}
                                             </div>
                                         </div>
                                         <a href="javascript:void(0)" class="toggle-content">Lihat selengkapnya</a>
-                                        {{-- <b>Persoalan yang dibahas</b><br>
-                                        @foreach ($item->persoalan_array as $p)
-                                            {{ $p }}<br>
-                            @endforeach
-                            <b>Tanggapan Peserta Rapat</b><br>
-                            @foreach ($item->tanggapan_array as $p)
-                            {{ $p }}<br>
-                            @endforeach
-                            <b>Simpulan</b><br>
-                            @foreach ($item->simpulan_array as $p)
-                            {{ $p }}<br>
-                            @endforeach --}}
                                     </td>
                                     <td class="align-top">
                                         <div class="d-flex flex-column gap-3">
-                                            <a href="{{ route('print_notula') . '?id=' . $item->id }}">
-                                                <iconify-icon class="text-black fs-6 pointer w-100" data-toggle="tooltip"
-                                                    data-placement="top" title="Print" icon="teenyicons:print-solid"
-                                                    style="cursor: pointer"></iconify-icon>
+                                            @if ($item->fk_user == Auth::id())
+                                                <a href="{{ route('edit_laporan') . '?id=' . $item->id }}"
+                                                    target="_blank">
+                                                    <iconify-icon class="text-black fs-6 pointer w-100 hoverable"
+                                                        data-toggle="tooltip" data-placement="top" title="Edit"
+                                                        icon="teenyicons:edit-1-solid"
+                                                        style="cursor: pointer"></iconify-icon>
+                                            @endif
+                                            </a>
+                                            <a href="{{ is_null($item->belum) ? '#' : route('print_notula') . "?id=$item->id" }}"
+                                                onclick="{!! is_null($item->belum) ? "alert('Tidak dapat membuat notula karena user belum menyelesaikan notulanya')" : '' !!}">
+                                                <iconify-icon class="text-black fs-6 pointer w-100 hoverable "
+                                                    data-toggle="tooltip" data-placement="top" title="Print"
+                                                    icon="teenyicons:print-solid"
+                                                    style="cursor: pointer; {{ is_null($item->belum) ? 'color: red !important' : '' }}"></iconify-icon>
                                             </a>
                                         </div>
                                     </td>
@@ -240,6 +303,8 @@
                     {{ $laporans->appends(['search' => request('search'), 'id_unit' => request('id_unit')])->links('pagination::bootstrap-5') }}
                 </div>
             </div>
+        </div>
+        <div class="card-footer">
         </div>
     </div>
 @endsection

@@ -161,8 +161,8 @@
                 <td>Agenda</td>
                 <td>:</td>
                 <td>
-                    @foreach ($laporan->susunans as $key => $item)
-                        {!! $key + 1 . '. ' . $item->nama_susunan . '<br>' !!}
+                    @foreach ($laporan->agendas as $key => $item)
+                        {!! $key + 1 . '. ' . $item->nama_agenda . '<br>' !!}
                     @endforeach
                 </td>
             </tr>
@@ -246,8 +246,8 @@
                 </td>
             </tr>
             <tr>
-                <td>Pak KSM</td>
-                <td>Pak Sus</td>
+                <td>{{ $laporan->nama_KSM }}</td>
+                <td>{{ $laporan->nama_pejabat }}</td>
             </tr>
             <tr>
                 <td>252525</td>

@@ -29,7 +29,7 @@ class EditLaporanRequest extends FormRequest
             'tanggal_rapat' => 'required',
             'jam_rapat' => 'required',
             'tempat' => 'required',
-            'susunan_acara' => 'required',
+            'agenda' => 'required',
             'pemimpin_rapat' => 'required',
             'peserta_rapat' => 'required',
             'tanggapan_peserta_rapat' => 'required',

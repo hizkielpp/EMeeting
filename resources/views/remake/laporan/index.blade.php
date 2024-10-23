@@ -278,9 +278,10 @@
                                                         style="cursor: pointer"></iconify-icon>
                                             @endif
                                             </a>
-                                            <a href="#" onclick="{!! is_null($item->belum)
-                                                ? "alert('Anda belum mengisi informasi pejabat tidak dapat melakukan print output, Silahkan mengisi informasi pejabat dan upload daftar hadir melalui fitur edit')"
-                                                : '' !!}">
+                                            <a href="{{ is_null($item->belum) ? '#' : route('print_notula') . "?id=$item->id" }}"
+                                                onclick="{!! is_null($item->belum)
+                                                    ? "alert('Anda belum mengisi informasi pejabat tidak dapat melakukan print output, Silahkan mengisi informasi pejabat dan upload daftar hadir melalui fitur edit')"
+                                                    : '' !!}">
                                                 <iconify-icon class="text-black fs-6 pointer w-100 hoverable "
                                                     data-toggle="tooltip" data-placement="top" title="Print"
                                                     icon="teenyicons:print-solid"

@@ -68,13 +68,13 @@
                     </div>
                 </div>
                 <div class="mb-3 fs__child form-label">
-                    Susunan Acara<span class="text-danger">*</span>
-                    <div id="su" class="mb-3">
+                    Agenda<span class="text-danger">*</span>
+                    <div id="a" class="mb-3">
                     </div>
-                    <input id="validator_su" class="d-none" required>
-                    <div id="add-su-button" class="btn btn-primary ">Tambah Susunan</div>
+                    <input id="validator_a" class="d-none" required>
+                    <div id="add-a-button" class="btn btn-primary ">Tambah Agenda</div>
                     <div class="invalid-feedback">
-                        Susunan acara harus diisi.
+                        Agenda harus diisi.
                     </div>
                 </div>
                 <div class="mb-3">
@@ -403,7 +403,7 @@
         }
         // Initialize the manager
         document.addEventListener('DOMContentLoaded', () => {
-            const dynamicInputManagerSu = new DynamicInputManager('su', 'add-su-button', 'susunan_acara[]',
+            const dynamicInputManagerSu = new DynamicInputManager('a', 'add-a-button', 'agenda[]',
                 'not_person');
             const dynamicInputManagerPr = new DynamicInputManager('pr', 'add-pr-button', 'peserta_rapat[]',
                 'person');

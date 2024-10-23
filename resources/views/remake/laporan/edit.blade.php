@@ -74,10 +74,10 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Susunan Acara<span class="text-danger">*</span></label>
-                    <div id="su" class="mb-3">
+                    <div id="a" class="mb-3">
                     </div>
-                    <input id="validator_su" class="d-none" required>
-                    <div id="add-su-button" class="btn btn-primary">Tambah Susunan</div>
+                    <input id="validator_a" class="d-none" required>
+                    <div id="add-a-button" class="btn btn-primary">Tambah Susunan</div>
                     <div class="invalid-feedback">
                         Susunan acara harus diisi.
                     </div>
@@ -420,12 +420,12 @@
         }
         // Initialize the manager
         document.addEventListener('DOMContentLoaded', () => {
-            const dynamicInputManagerSu = new DynamicInputManager('su', 'add-su-button', 'susunan_acara[]',
+            const dynamicInputManagerSu = new DynamicInputManager('a', 'add-a-button', 'agenda[]',
                 'not_person');
             const dynamicInputManagerPr = new DynamicInputManager('pr', 'add-pr-button', 'peserta_rapat[]',
                 'person');
-            @foreach ($laporan->susunans as $i => $item)
-                dynamicInputManagerSu.addInput('{{ $item->nama_susunan }}')
+            @foreach ($laporan->agendas as $i => $item)
+                dynamicInputManagerSu.addInput('{{ $item->nama_agenda }}')
             @endforeach
             @foreach ($laporan->pesertas as $i => $item)
                 dynamicInputManagerPr.addInput('{{ $item->nama_peserta }}')
