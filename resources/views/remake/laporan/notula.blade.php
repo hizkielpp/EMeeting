@@ -225,7 +225,7 @@
         </table>
         <table class="tanda_tangan">
             <tr>
-                <td>{{ isset($laporan->nama_jabatan_KSM) ? $laporan->nama_jabatan_KSM : '' }}</td>
+                <td>{{ isset($laporan->tanda_tangan_KSM) ? $laporan->nama_jabatan_KSM : '' }}</td>
                 <td>{{ isset($laporan->nama_jabatan_pejabat) ? $laporan->nama_jabatan_pejabat : '' }}</td>
             </tr>
             <tr>
@@ -237,21 +237,34 @@
                     @endif
                 </td>
                 <td>
-                <td>
                     @if (isset($laporan->tanda_tangan_pejabat))
                         <img src="{{ asset('tanda_tangan/' . $laporan->tanda_tangan_pejabat) }}" width="200px"
                             alt="">
                     @endif
                 </td>
-                </td>
             </tr>
             <tr>
-                <td>{{ $laporan->nama_KSM }}</td>
+                <td>{{ isset($laporan->tanda_tangan_KSM) ? $laporan->nama_KSM : '' }}</td>
                 <td>{{ $laporan->nama_pejabat }}</td>
             </tr>
             <tr>
-                <td>252525</td>
-                <td>262626</td>
+                <td>{{ isset($laporan->tanda_tangan_KSM) ? $laporan->NIP_KSM : '' }}</td>
+                <td>{{ $laporan->NIP_pejabat }}</td>
+            </tr>
+            <tr>
+                <td>{{ isset($laporan->tanda_tangan_Kabag) ? $laporan->nama_jabatan_Kabag : '' }}</td>
+            </tr>
+            <tr>
+                @if (isset($laporan->tanda_tangan_Kabag))
+                    <img src="{{ asset('tanda_tangan/' . $laporan->tanda_tangan_Kabag) }}" width="200px"
+                        alt="">
+                @endif
+            </tr>
+            <tr>
+                <td>{{ isset($laporan->tanda_tangan_Kabag) ? $laporan->nama_Kabag : '' }}</td>
+            </tr>
+            <tr>
+                <td>{{ isset($laporan->tanda_tangan_Kabag) ? $laporan->NIP_Kabag : '' }}</td>
             </tr>
         </table>
     </div>
