@@ -207,7 +207,7 @@ class LaporanController extends Controller
             unset($data['jam_rapat']);
 
             $laporan->update($data);
-            return redirect()->back()->with('success', 'Berhasil mengubah laporan');
+            return redirect()->to('log_laporan')->with('success', 'Berhasil mengubah laporan');
         } catch (\Exception $e) {
             return $e;
         }
