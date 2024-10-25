@@ -41,6 +41,8 @@ class Laporan extends Model
         'lain_lain',
         'tanggapan_peserta_rapat',
         'simpulan',
+        'evaluasi',
+        'pembinaan',
     ];
     public function post()
     {

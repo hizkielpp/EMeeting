@@ -223,6 +223,8 @@ class LaporanController extends Controller
         $laporan['lain_lain_array'] = array_merge(preg_split('/\n|\r\n?/', $laporan['lain_lain']));
         $laporan['tanggapan_array'] = array_merge(preg_split('/\n|\r\n?/', $laporan['tanggapan_peserta_rapat']));
         $laporan['simpulan_array'] = array_merge(preg_split('/\n|\r\n?/', $laporan['simpulan']));
+        $laporan['evaluasi_array'] = array_merge(preg_split('/\n|\r\n?/', $laporan['evaluasi']));
+        $laporan['pembinaan_array'] = array_merge(preg_split('/\n|\r\n?/', $laporan['pembinaan']));
         $pdf = Pdf::loadView('remake.laporan.notula', ['laporan' => $laporan]);
         $output_filename = time() . Auth::id() . 'output' . '.pdf';
         $pdf->save('output/' . $output_filename);
@@ -232,11 +234,15 @@ class LaporanController extends Controller
         $pdf->addPDF('output/' . $output_filename, 'all');
         // add bukti kehadiran
         $pdf->addPDF('bukti/' . $laporan->bukti_presensi_kehadiran, 'all');
-        // add file pendukung if exist
-        $pdf->addPDF('bukti/' . $laporan->file_pendukung_rapat, 'all');
+        if (!is_null($laporan->file_pendukung_rapat)) {
+            // add file pendukung if exist
+            $pdf->addPDF('bukti/' . $laporan->file_pendukung_rapat, 'all');
+        }
         $fileName = time() . '.pdf';
         $pdf->merge();
         $pdf->save('output/' . $fileName);
+        $pdf->stream('output/' . $fileName, array("Attachment" => false));
+        exit(0);
         return response()->download('output/' . $fileName);
     }
 }

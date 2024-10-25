@@ -34,6 +34,7 @@ class EditLaporanRequest extends FormRequest
             'peserta_rapat' => 'required',
             'tanggapan_peserta_rapat' => 'required',
             'simpulan' => 'required',
+            'evaluasi' => 'required',
         ];
     }
 }

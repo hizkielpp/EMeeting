@@ -29,6 +29,10 @@ class InputLaporanRequest extends FormRequest
             'jam_rapat' => 'required',
             'tempat' => 'required',
             'pemimpin_rapat' => 'required',
+            'peserta_rapat' => 'required',
+            'tanggapan_peserta_rapat' => 'required',
+            'simpulan' => 'required',
+            'evaluasi' => 'required',
             // 'pencatat' => 'required',
         ];
     }

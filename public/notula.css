@@ -78,7 +78,7 @@ table.bahasan tr td {
     vertical-align: top;
 }
 .container{
-    padding: 4.13cm 2.25cm 1cm 2.06cm;
+    margin: 4.13cm 2.25cm 1cm 2.06cm;
 }
 .p-fixed{
     position: fixed;
@@ -128,4 +128,7 @@ table.tanda_tangan{
     font-size: 16pt !important;
     color: #000066 !important;
     font-weight: 600 !important;
+}
+.page-break {
+    page-break-after: always !important;
 }

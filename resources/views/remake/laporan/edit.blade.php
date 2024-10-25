@@ -309,6 +309,22 @@
                         Simpulan harus diisi.
                     </div>
                 </div>
+                <div>
+                    <label for="evaluasi" class="form-label">evaluasi<span class="text-danger">*</span></label>
+                    <textarea maxlength="1200" name="evaluasi" id="evaluasi" class="form-control valued bc" cols="30"
+                        rows="10" required>{{ $laporan->evaluasi }}</textarea>
+                    <div class="invalid-feedback">
+                        Evaluasi harus diisi.
+                    </div>
+                </div>
+                <div>
+                    <label for="pembinaan" class="form-label">Pembinaan</label>
+                    <textarea maxlength="1200" name="pembinaan" id="pembinaan" class="form-control valued bc" cols="30"
+                        rows="10" required>{{ $laporan->pembinaan }}</textarea>
+                    <div class="invalid-feedback">
+                        Pembinaan harus diisi.
+                    </div>
+                </div>
                 <button type="submit" class="mt-3 btn btn-primary">Submit</button>
             </form>
         </div>

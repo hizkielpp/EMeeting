@@ -45,6 +45,8 @@ return new class extends Migration
             $table->text('lain_lain')->nullable();
             $table->text('tanggapan_peserta_rapat');
             $table->text('simpulan');
+            $table->text('evaluasi');
+            $table->text('pembinaan');
             $table->timestamps();
         });
     }

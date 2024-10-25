@@ -129,144 +129,187 @@
         </table>
     </header>
     {{-- Header end --}}
+    <div class="page-break">
+        <div class="margin-top fs-12 text-center">
+            NOTULA
+        </div>
+        <div>
+            <table class="deskripsi">
+                <tr>
+                    <td>Nama Rapat</td>
+                    <td>:</td>
+                    <td>{{ $laporan->nama_rapat }}</td>
+                </tr>
+                <tr>
+                    <td>Hari, Tanggal</td>
+                    <td>:</td>
+                    <td>
+                        {{ date('d', strtotime($laporan->tanggal_rapat)) . ' ' . $bulan[date('m', strtotime($laporan->tanggal_rapat))] . ' ' . date('Y', strtotime($laporan->tanggal_rapat)) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Pukul</td>
+                    <td>:</td>
+                    <td>{{ date('H:i:s', strtotime($laporan->tanggal_rapat)) }}</td>
+                </tr>
+                <tr>
+                    <td>Tempat</td>
+                    <td>:</td>
+                    <td>{{ $laporan->tempat }}</td>
+                </tr>
+                <tr>
+                    <td>Agenda</td>
+                    <td>:</td>
+                    <td>
+                        @foreach ($laporan->agendas as $key => $item)
+                            {!! $key + 1 . '. ' . $item->nama_agenda . '<br>' !!}
+                        @endforeach
+                    </td>
+                </tr>
+                <tr>
+                    <td>Pimpinan Rapat</td>
+                    <td>:</td>
+                    <td>Mas Wawan</td>
+                </tr>
+                <tr>
+                    <td>Peserta Rapat</td>
+                    <td>:</td>
+                    <td>
+                        @foreach ($laporan->pesertas as $key => $item)
+                            {!! $key + 1 . '. ' . $item->nama_peserta . '<br>' !!}
+                        @endforeach
+                    </td>
+                </tr>
 
-    <div class="margin-top fs-12 text-center">
-        NOTULA
-    </div>
-    <div>
-        <table class="deskripsi">
-            <tr>
-                <td>Nama Rapat</td>
-                <td>:</td>
-                <td>{{ $laporan->nama_rapat }}</td>
-            </tr>
-            <tr>
-                <td>Hari, Tanggal</td>
-                <td>:</td>
-                <td>
-                    {{ date('d', strtotime($laporan->tanggal_rapat)) . ' ' . $bulan[date('m', strtotime($laporan->tanggal_rapat))] . ' ' . date('Y', strtotime($laporan->tanggal_rapat)) }}
-                </td>
-            </tr>
-            <tr>
-                <td>Pukul</td>
-                <td>:</td>
-                <td>{{ date('H:i:s', strtotime($laporan->tanggal_rapat)) }}</td>
-            </tr>
-            <tr>
-                <td>Tempat</td>
-                <td>:</td>
-                <td>{{ $laporan->tempat }}</td>
-            </tr>
-            <tr>
-                <td>Agenda</td>
-                <td>:</td>
-                <td>
-                    @foreach ($laporan->agendas as $key => $item)
-                        {!! $key + 1 . '. ' . $item->nama_agenda . '<br>' !!}
-                    @endforeach
-                </td>
-            </tr>
-            <tr>
-                <td>Pimpinan Rapat</td>
-                <td>:</td>
-                <td>Mas Wawan</td>
-            </tr>
-            <tr>
-                <td>Peserta Rapat</td>
-                <td>:</td>
-                <td>
-                    @foreach ($laporan->pesertas as $key => $item)
-                        {!! $key + 1 . '. ' . $item->nama_peserta . '<br>' !!}
-                    @endforeach
-                </td>
-            </tr>
+            </table>
+            <table class="bahasan ">
+                <tr>
+                    <td>Persoalan yang dibahas</td>
+                    <td>:</td>
+                    <td>
+                        @if (!is_null($laporan->mahasiswa))
+                            <b>Mahasiswa</b><br>
+                            @foreach ($laporan->mahasiswa_array as $key => $item)
+                                {!! $key + 1 . '.' . $item . '<br>' !!}
+                            @endforeach
+                        @endif
+                        @if (!is_null($laporan->dosen))
+                            <b>Dosen</b><br>
+                            @foreach ($laporan->dosen_array as $key => $item)
+                                {!! $key + 1 . '.' . $item . '<br>' !!}
+                            @endforeach
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        @if (!is_null($laporan->tendik))
+                            <b>Tendik</b><br>
+                            @foreach ($laporan->tendik_array as $key => $item)
+                                {!! $key + 1 . '.' . $item . '<br>' !!}
+                            @endforeach
+                        @endif
+                        @if (!is_null($laporan->sarpras))
+                            <b>Tendik</b><br>
+                            @foreach ($laporan->sarpras_array as $key => $item)
+                                {!! $key + 1 . '.' . $item . '<br>' !!}
+                            @endforeach
+                        @endif
+                        @if (!is_null($laporan->lain_lain))
+                            <b>Lain-lain</b><br>
+                            @foreach ($laporan->lain_lain_array as $key => $item)
+                                {!! $key + 1 . '.' . $item . '<br>' !!}
+                            @endforeach
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td>Tanggapan peserta rapat</td>
+                    <td>:</td>
+                    <td>
+                        @foreach ($laporan->tanggapan_array as $item)
+                            {!! $item . '<br>' !!}
+                        @endforeach
+                    </td>
+                </tr>
+                <tr>
+                    <td>Simpulan</td>
+                    <td>:</td>
+                    <td>
+                        @foreach ($laporan->simpulan_array as $item)
+                            {!! $item . '<br>' !!}
+                        @endforeach
+                    </td>
+                </tr>
+                <tr>
+                    <td>Evaluasi</td>
+                    <td>:</td>
+                    <td>
+                        @foreach ($laporan->evaluasi_array as $item)
+                            {!! $item . '<br>' !!}
+                        @endforeach
+                    </td>
+                </tr>
+                @if (!is_null($laporan->pembinaan))
+                    <tr>
+                        <td>Pembinaan</td>
+                        <td>:</td>
+                        <td>
+                            @foreach ($laporan->pembinaan_array as $item)
+                                {!! $item . '<br>' !!}
+                            @endforeach
+                        </td>
+                    </tr>
 
-        </table>
-        <table class="bahasan">
-            <tr>
-                <td>Persoalan yang dibahas</td>
-                <td>:</td>
-                <td>
-                    @foreach ($laporan->mahasiswa_array as $item)
-                        {!! $item . '<br>' !!}
-                    @endforeach
-                    @foreach ($laporan->dosen_array as $item)
-                        {!! $item . '<br>' !!}
-                    @endforeach
-                    @foreach ($laporan->tendik_array as $item)
-                        {!! $item . '<br>' !!}
-                    @endforeach
-                    @foreach ($laporan->sarpras_array as $item)
-                        {!! $item . '<br>' !!}
-                    @endforeach
-                    @foreach ($laporan->lain_lain_array as $item)
-                        {!! $item . '<br>' !!}
-                    @endforeach
-                </td>
-            </tr>
-            <tr>
-                <td>Tanggapan peserta rapat</td>
-                <td>:</td>
-                <td>
-                    @foreach ($laporan->tanggapan_array as $item)
-                        {!! $item . '<br>' !!}
-                    @endforeach
-                </td>
-            </tr>
-            <tr>
-                <td>Simpulan</td>
-                <td>:</td>
-                <td>
-                    @foreach ($laporan->simpulan_array as $item)
-                        {!! $item . '<br>' !!}
-                    @endforeach
-                </td>
-            </tr>
-        </table>
-        <table class="tanda_tangan">
-            <tr>
-                <td>{{ isset($laporan->tanda_tangan_KSM) ? $laporan->nama_jabatan_KSM : '' }}</td>
-                <td>{{ isset($laporan->nama_jabatan_pejabat) ? $laporan->nama_jabatan_pejabat : '' }}</td>
-            </tr>
-            <tr>
-                {{-- Tanda tangan --}}
-                <td>
-                    @if (isset($laporan->tanda_tangan_KSM))
-                        <img src="{{ asset('tanda_tangan/' . $laporan->tanda_tangan_KSM) }}" width="200px"
-                            alt="">
-                    @endif
-                </td>
-                <td>
-                    @if (isset($laporan->tanda_tangan_pejabat))
-                        <img src="{{ asset('tanda_tangan/' . $laporan->tanda_tangan_pejabat) }}" width="200px"
-                            alt="">
-                    @endif
-                </td>
-            </tr>
-            <tr>
-                <td>{{ isset($laporan->tanda_tangan_KSM) ? $laporan->nama_KSM : '' }}</td>
-                <td>{{ $laporan->nama_pejabat }}</td>
-            </tr>
-            <tr>
-                <td>{{ isset($laporan->tanda_tangan_KSM) ? $laporan->NIP_KSM : '' }}</td>
-                <td>{{ $laporan->NIP_pejabat }}</td>
-            </tr>
-            <tr>
-                <td>{{ isset($laporan->tanda_tangan_Kabag) ? $laporan->nama_jabatan_Kabag : '' }}</td>
-            </tr>
-            <tr>
-                @if (isset($laporan->tanda_tangan_Kabag))
-                    <img src="{{ asset('tanda_tangan/' . $laporan->tanda_tangan_Kabag) }}" width="200px"
-                        alt="">
                 @endif
-            </tr>
-            <tr>
-                <td>{{ isset($laporan->tanda_tangan_Kabag) ? $laporan->nama_Kabag : '' }}</td>
-            </tr>
-            <tr>
-                <td>{{ isset($laporan->tanda_tangan_Kabag) ? $laporan->NIP_Kabag : '' }}</td>
-            </tr>
-        </table>
+            </table>
+            <table class="tanda_tangan">
+                <tr>
+                    <td>{{ isset($laporan->tanda_tangan_KSM) ? $laporan->nama_jabatan_KSM : '' }}</td>
+                    <td>{{ isset($laporan->nama_jabatan_pejabat) ? $laporan->nama_jabatan_pejabat : '' }}</td>
+                </tr>
+                <tr>
+                    {{-- Tanda tangan --}}
+                    <td>
+                        @if (isset($laporan->tanda_tangan_KSM))
+                            <img src="{{ asset('tanda_tangan/' . $laporan->tanda_tangan_KSM) }}" width="200px"
+                                alt="">
+                        @endif
+                    </td>
+                    <td>
+                        @if (isset($laporan->tanda_tangan_pejabat))
+                            <img src="{{ asset('tanda_tangan/' . $laporan->tanda_tangan_pejabat) }}" width="200px"
+                                alt="">
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ isset($laporan->tanda_tangan_KSM) ? $laporan->nama_KSM : '' }}</td>
+                    <td>{{ $laporan->nama_pejabat }}</td>
+                </tr>
+                <tr>
+                    <td>{{ isset($laporan->tanda_tangan_KSM) ? $laporan->NIP_KSM : '' }}</td>
+                    <td>{{ $laporan->NIP_pejabat }}</td>
+                </tr>
+                <tr>
+                    <td>{{ isset($laporan->tanda_tangan_Kabag) ? $laporan->nama_jabatan_Kabag : '' }}</td>
+                </tr>
+                <tr>
+                    @if (isset($laporan->tanda_tangan_Kabag))
+                        <img src="{{ asset('tanda_tangan/' . $laporan->tanda_tangan_Kabag) }}" width="200px"
+                            alt="">
+                    @endif
+                </tr>
+                <tr>
+                    <td>{{ isset($laporan->tanda_tangan_Kabag) ? $laporan->nama_Kabag : '' }}</td>
+                </tr>
+                <tr>
+                    <td>{{ isset($laporan->tanda_tangan_Kabag) ? $laporan->NIP_Kabag : '' }}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 
 </body>

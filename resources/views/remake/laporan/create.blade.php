@@ -294,6 +294,30 @@
                         Simpulan harus diisi.
                     </div>
                 </div>
+                <div>
+                    <label for="evaluasi" class="form-label mt-2">Evaluasi<span class="text-danger ">*</span>
+                        <br><span class="fs__normal">
+                            Masukkan/tuliskan/laporkan hasil evaluasi dari prodi-prodi di lingkungan kerja departemen
+                            Saudara terkait SDM, sarana dan prasarana, Pendidikan/Tri Dharma, prestasi dan /
+                            pelanggaran-pelanggaran oleh civitas dll yang perlu dilaporkan.
+                        </span>
+                    </label>
+                    <textarea maxlength="1200" name="evaluasi" id="evaluasi" class="form-control bc valued" cols="30"
+                        rows="10" required></textarea>
+                    <div class="invalid-feedback">
+                        Evaluasi harus diisi.
+                    </div>
+                </div>
+                <div>
+                    <label for="pembinaan" class="form-label mt-2">Pembinaan
+                        <br><span class="fs__normal">
+                            masukkan/tuliskan/laporkan Rencana Tidak Lanjut (RTL) atau arahan yang diberikan oleh departemen
+                            Saudara ke prodi-prodi di lingkungan kerja Saudara.
+                        </span>
+                    </label>
+                    <textarea maxlength="1200" name="pembinaan" id="pembinaan" class="form-control bc valued" cols="30"
+                        rows="10"></textarea>
+                </div>
                 <button type="submit" class="mt-3 btn btn-primary">Submit</button>
             </form>
         </div>
