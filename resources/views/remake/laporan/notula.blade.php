@@ -129,7 +129,7 @@
         </table>
     </header>
     {{-- Header end --}}
-    <div class="page-break">
+    <div>
         <div class="margin-top fs-12 text-center">
             NOTULA
         </div>

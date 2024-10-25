@@ -241,8 +241,8 @@ class LaporanController extends Controller
         $fileName = time() . '.pdf';
         $pdf->merge();
         $pdf->save('output/' . $fileName);
-        $pdf->stream('output/' . $fileName, array("Attachment" => false));
-        exit(0);
+        // $pdf->stream('output/' . $fileName, array("Attachment" => false));
+        // exit(0);
         return response()->download('output/' . $fileName);
     }
 }
