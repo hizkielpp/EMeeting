@@ -193,6 +193,12 @@
                                 {!! $key + 1 . '.' . $item . '<br>' !!}
                             @endforeach
                         @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
                         @if (!is_null($laporan->dosen))
                             <b>Dosen</b><br>
                             @foreach ($laporan->dosen_array as $key => $item)
@@ -211,12 +217,24 @@
                                 {!! $key + 1 . '.' . $item . '<br>' !!}
                             @endforeach
                         @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
                         @if (!is_null($laporan->sarpras))
                             <b>Tendik</b><br>
                             @foreach ($laporan->sarpras_array as $key => $item)
                                 {!! $key + 1 . '.' . $item . '<br>' !!}
                             @endforeach
                         @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
                         @if (!is_null($laporan->lain_lain))
                             <b>Lain-lain</b><br>
                             @foreach ($laporan->lain_lain_array as $key => $item)
@@ -262,7 +280,6 @@
                             @endforeach
                         </td>
                     </tr>
-
                 @endif
             </table>
             <table class="tanda_tangan">
